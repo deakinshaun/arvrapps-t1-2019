@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-abstract public class GenericContent 
+public abstract class GenericContent 
 {
-    abstract public string Content { get {return null;} }
+    public abstract string Content { get; }
 
     public GenericContent()
     {

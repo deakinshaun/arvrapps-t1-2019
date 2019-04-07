@@ -24,6 +24,6 @@ public class TaskContainer : MonoBehaviour
 
     public void SetTask(GenericTask _task)
     {
-        task = _task;
+        Task = _task;
     }
 }

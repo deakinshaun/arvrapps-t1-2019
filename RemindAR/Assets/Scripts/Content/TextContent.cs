@@ -10,13 +10,13 @@ public class TextContent : GenericContent
     public TextContent()
     {   
         textData = "";
-        return this;
+
     }
 
     public TextContent(string text)
     {
         textData = text;
-        return this;
+
     }
 
     public void Edit(string text)

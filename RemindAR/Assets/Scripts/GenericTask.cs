@@ -18,6 +18,7 @@ public class GenericTask
             {
                 output += G.Content + "/n";
             }
+            return output;
         }
     }
 }
