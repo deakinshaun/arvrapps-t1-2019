@@ -135,10 +135,15 @@
                 Debug.Log("Touch Began");
                 if (Frame.Raycast(touch.position.x, touch.position.y, raycastFilter, out hit))
                 {
+                    if (CurrentNumberOfGameObjects == numberOfGameObjectsAllowed)
+                    {
+                        Destroy(ARObject);
+                        CurrentNumberOfGameObjects = 0;
+                    }
                     if (CurrentNumberOfGameObjects < numberOfGameObjectsAllowed)
                     {
                         Debug.Log("Screen Touched");
-                        Destroy(ARObject);
+                        
                         // Use hit pose and camera pose to check if hittest is from the
                         // back of the plane, if it is, no need to create the anchor.
                         if ((hit.Trackable is DetectedPlane) &&
@@ -151,7 +156,7 @@
                         {
 
                             ARObject = Instantiate(ARAndroidPrefab, hit.Pose.position, hit.Pose.rotation);// Instantiate Andy model at the hit pose.                                                                                 
-                            ARObject.transform.Rotate(-90, 0, 0, Space.Self);// Compensate for the hitPose rotation facing away from the raycast (i.e. camera).
+                            ARObject.transform.Rotate(90, 0, 0, Space.Self);// Compensate for the hitPose rotation facing away from the raycast (i.e. camera).
                             var anchor = hit.Trackable.CreateAnchor(hit.Pose);
                             ARObject.transform.parent = anchor.transform;
                             CurrentNumberOfGameObjects = CurrentNumberOfGameObjects + 1;
