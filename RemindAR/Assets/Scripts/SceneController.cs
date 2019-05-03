@@ -155,8 +155,12 @@
                         else
                         {
 
-                            ARObject = Instantiate(ARAndroidPrefab, hit.Pose.position, hit.Pose.rotation);// Instantiate Andy model at the hit pose.                                                                                 
+                            ARObject = Instantiate(ARAndroidPrefab, hit.Pose.position, hit.Pose.rotation);// Instantiate Andy model at the hit pose.             
+
+                            // @TODO Modify the rotation of this so it faces upwards                                                                    
                             ARObject.transform.Rotate(90, 0, 0, Space.Self);// Compensate for the hitPose rotation facing away from the raycast (i.e. camera).
+
+                            
                             var anchor = hit.Trackable.CreateAnchor(hit.Pose);
                             ARObject.transform.parent = anchor.transform;
                             CurrentNumberOfGameObjects = CurrentNumberOfGameObjects + 1;

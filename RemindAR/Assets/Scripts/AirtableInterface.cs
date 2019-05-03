@@ -5,17 +5,25 @@ using System.Threading.Tasks;
 using UnityEngine;
 using AirtableApiClient;
 
-
-public class AirtableInterface : MonoBehaviour
-{
+public class AirtableInterface : MonoBehaviour {
 
     readonly string baseId = "appxWREHbWVRhUrMR";
     readonly string appKey = "key6kaWf02hedLgNZ";
     readonly string tableName = "RemindAR";
 
+    public static AirtableInterface Singleton;
+
     string filterFormula = "";
-    IEnumerable<string> filterFields = new List<string>() {"ID", "Title", "Content"};
+    IEnumerable<string> filterFields = new List<string>() {/*"ID",*/ "Title", "Content"};
     private bool f_connectingToAirtable = false;
+
+    /// <summary>
+    /// This function is called when the object becomes enabled and active.
+    /// </summary>
+    void OnEnable()
+    {
+        Singleton = this;
+    }
 
     public void GetData()
     {
