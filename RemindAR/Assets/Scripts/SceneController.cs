@@ -99,6 +99,7 @@
                 if (m_AllPlanes[i].TrackingState == TrackingState.Tracking)
                 {
                     showSearchingUI = false;
+                    
                     break;
                 }
             }
