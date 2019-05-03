@@ -9,6 +9,12 @@ using UnityEngine;
 public class GenericTask 
 {
     List<GenericContent> contents;
+    public string Title;
+
+    public GenericTask(string _title)
+    {
+        Title = _title;
+    }
 
     public string Display{ 
         get 
@@ -20,5 +26,10 @@ public class GenericTask
             }
             return output;
         }
+    }
+
+    public void AddContent(GenericContent _content)
+    {
+        contents.Add( _content);
     }
 }

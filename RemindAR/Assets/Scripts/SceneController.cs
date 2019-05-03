@@ -1,13 +1,4 @@
-﻿/*=================================================
-==Adapted by  : Ritesh Kanjee(Augmented Startups)==
-==Date        : 23 May 2018      				 ==
-==Revision    : 1.4 				 		  	 ==	
-==Description : Modified HelloAR Controller  	 ==
-== Ver 1.2	    Cleaned Code - Vertical Plane    ==
-== Ver 1.3	   	Updated for ARCore 1.2         	 ==	
-== Ver 1.4	   	Added Gesture Control        	 ==	
-==================================================*/
-namespace GoogleARCore.Examples.HelloAR
+﻿namespace GoogleARCore.Examples.HelloAR
 {
     using System.Collections.Generic;
     using System.Collections;
@@ -32,7 +23,6 @@ namespace GoogleARCore.Examples.HelloAR
         private int                 numberOfGameObjectsAllowed = 1;
         //For Pinch to Zoom
         float prevTouchDistance;
-        float zoomSpeed = 0.2f;
 
         public void Update()
         {
@@ -125,50 +115,11 @@ namespace GoogleARCore.Examples.HelloAR
             if (Input.touchCount != 0)
             {
                 _SpawnARObject();
-                _PinchtoZoom();
-                _Rotate();
             }
 
 
         }
-        public void _PinchtoZoom()
-        {
-            if (Input.touchCount == 2)
-            {
-                // Store both touches.
-                Touch touchZero = Input.GetTouch(0);
-                Touch touchOne = Input.GetTouch(1);
 
-                // Find the position in the previous frame of each touch.
-                Vector2 touchZeroPrevPos = touchZero.position - touchZero.deltaPosition;
-                Vector2 touchOnePrevPos = touchOne.position - touchOne.deltaPosition;
-
-                // Find the magnitude of the vector (the distance) between the touches in each frame.
-                float prevTouchDeltaMag = (touchZeroPrevPos - touchOnePrevPos).magnitude;
-                float touchDeltaMag = (touchZero.position - touchOne.position).magnitude;
-
-                // Find the difference in the distances between each frame.
-                float deltaMagnitudeDiff = prevTouchDeltaMag - touchDeltaMag;
-
-
-                float pinchAmount = deltaMagnitudeDiff * 0.02f * Time.deltaTime;
-                ARObject.transform.localScale += new Vector3(pinchAmount, pinchAmount, pinchAmount);
-
-
-            }
-        }
-        public void _Rotate()
-        {
-            Touch touch;
-            touch = Input.GetTouch(0);
-            if (Input.touchCount == 1 && touch.phase == TouchPhase.Moved)
-            {
-                ARObject.transform.Rotate(Vector3.forward * 40f * Time.deltaTime * touch.deltaPosition.y, Space.Self);
-                Debug.Log("Delta Touch is " + touch.deltaPosition);
-            }
-
-        
-        }
         public void _SpawnARObject()
         {
             Touch touch;
