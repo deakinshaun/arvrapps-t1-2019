@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5551915125023190548}
   - component: {fileID: 5926219076683684078}
   - component: {fileID: 2420477183992826244}
+  - component: {fileID: 7987375317909513982}
   m_Layer: 0
   m_Name: WhiteBoard
   m_TagString: Untagged
@@ -92,3 +93,18 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &7987375317909513982
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2928416914402826568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f170c3aa57d12324897a2ed7b2ee85ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TaskContainerPrefab: {fileID: 6300792041493612353, guid: c33b6f558cfcba3448bc85b7f79742a8,
+    type: 3}
+  TaskContainers: []
