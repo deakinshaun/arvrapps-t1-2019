@@ -10,21 +10,32 @@ public class TaskController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        AirtableInterface.Singleton.GetData();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (AirtableInterface.Singleton.f_dataAcquired)
+        {
+            
+            foreach (DatabaseEntry _entry in AirtableInterface.Singleton.Database)
+            {
+
+                CreateNewTask(_entry.Title, _entry.Content);
+            }
+
+        }
+        AirtableInterface.Singleton.f_dataAcquired = false;
     }
 
-    void CreateNewTask()
+    void CreateNewTask( string _title, string _content)
     {
-        var _taskContainerObject = Instantiate(TaskContainerPrefab);
+        var _location = transform.position + (Vector3.right * 0.2f * TaskContainers.Count);
+        var _taskContainerObject = Instantiate(TaskContainerPrefab, _location, transform.rotation);
         var _taskContainer = _taskContainerObject.GetComponent<TaskContainer>();
 
-        _taskContainer.SetTask(new GenericTask("Test task").AddContent(new TextContent("Test contents")));
+        _taskContainer.SetTask(new GenericTask(_title).AddContent(new TextContent(_content)));
 
         TaskContainers.Add(_taskContainerObject.transform);
     }

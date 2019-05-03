@@ -16,6 +16,9 @@ public class AirtableInterface : MonoBehaviour {
     string filterFormula = "";
     IEnumerable<string> filterFields = new List<string>() {/*"ID",*/ "Title", "Content"};
     private bool f_connectingToAirtable = false;
+    public bool f_dataAcquired = false;
+
+    public List<DatabaseEntry> Database;
 
     /// <summary>
     /// This function is called when the object becomes enabled and active.
@@ -23,6 +26,7 @@ public class AirtableInterface : MonoBehaviour {
     void OnEnable()
     {
         Singleton = this;
+        Database = new List<DatabaseEntry>();
     }
 
     public void GetData()
@@ -84,14 +88,30 @@ public class AirtableInterface : MonoBehaviour {
             // for the next page of the record list.
             foreach (AirtableRecord _atr in records)
             {
-                var _title = _atr.Fields["Title"];
-                var _content = _atr.Fields["Content"];
+                var _title = (string)_atr.Fields["Title"];
+                var _content = (string)_atr.Fields["Content"];
 
                 Debug.Log(_title + " " + _content);
+
+                Database.Add(new DatabaseEntry(_title, _content));
             }
         }
 
         f_connectingToAirtable = false;
+        f_dataAcquired = true;
     }
     
+}
+
+// my lazy implementation of a tuple
+public class DatabaseEntry
+{
+    public string Title {get; private set; }
+    public string Content {get; private set; }
+
+    public DatabaseEntry(string _t, string _c)
+    {
+        Title = _t;
+        Content = _c;
+    }
 }

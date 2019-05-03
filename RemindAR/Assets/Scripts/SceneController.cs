@@ -21,8 +21,8 @@
         private bool                m_IsQuitting = false;
         public static int           CurrentNumberOfGameObjects = 0;
         private int                 numberOfGameObjectsAllowed = 1;
-        //For Pinch to Zoom
-        float prevTouchDistance;
+
+        private TaskController TaskControllerObject;
 
         public void Update()
         {
@@ -109,8 +109,9 @@
         }
         public void _InstantiateOnTouch()
         {
-            Touch touch;
-            touch = Input.GetTouch(0);
+        //    Touch touch;
+            
+        //touch = Input.GetTouch(0);
 
  
             if (Input.touchCount != 0)
@@ -156,11 +157,12 @@
                         {
 
                             ARObject = Instantiate(ARAndroidPrefab, hit.Pose.position, hit.Pose.rotation);// Instantiate Andy model at the hit pose.             
+                            TaskControllerObject = ARObject.GetComponent<TaskController>();
 
                             // @TODO Modify the rotation of this so it faces upwards                                                                    
                             ARObject.transform.Rotate(90, 0, 0, Space.Self);// Compensate for the hitPose rotation facing away from the raycast (i.e. camera).
 
-                            
+
                             var anchor = hit.Trackable.CreateAnchor(hit.Pose);
                             ARObject.transform.parent = anchor.transform;
                             CurrentNumberOfGameObjects = CurrentNumberOfGameObjects + 1;
