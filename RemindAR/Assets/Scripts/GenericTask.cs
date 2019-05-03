@@ -14,6 +14,7 @@ public class GenericTask
     public GenericTask(string _title)
     {
         Title = _title;
+        contents = new List<GenericContent>();
     }
 
     public string Display{ 
