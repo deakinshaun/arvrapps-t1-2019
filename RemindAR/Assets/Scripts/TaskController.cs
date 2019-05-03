@@ -5,6 +5,7 @@ using UnityEngine;
 public class TaskController : MonoBehaviour
 {
     public GameObject TaskContainerPrefab;
+    public List<Transform> TaskContainers;
 
     // Start is called before the first frame update
     void Start()
@@ -24,5 +25,7 @@ public class TaskController : MonoBehaviour
         var _taskContainer = _taskContainerObject.GetComponent<TaskContainer>();
 
         _taskContainer.SetTask(new GenericTask("Test task").AddContent(new TextContent("Test contents")));
+
+        TaskContainers.Add(_taskContainerObject.transform);
     }
 }

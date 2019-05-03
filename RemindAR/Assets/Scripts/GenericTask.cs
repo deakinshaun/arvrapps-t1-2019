@@ -28,8 +28,10 @@ public class GenericTask
         }
     }
 
-    public void AddContent(GenericContent _content)
+    public GenericTask AddContent(GenericContent _content)
     {
         contents.Add( _content);
+
+        return this;
     }
 }
