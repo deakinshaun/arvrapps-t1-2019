@@ -63,12 +63,12 @@ public class MoveAvatar : MonoBehaviour {
 
     public void moveLeft()
     {
-        altitude -= stepSize; setPosition();
+        latitude -= stepSize; setPosition();
     }
 
     public void moveRight()
     {
-        altitude += stepSize; setPosition();
+        latitude += stepSize; setPosition();
     }
 
     public void spawnPortal ()

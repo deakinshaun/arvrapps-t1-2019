@@ -123,7 +123,7 @@ public class SharedLocationClient : MonoBehaviour {
         foreach (LocationData Id in clientDatabase)
         {
             GameObject g = GameObject.Instantiate(pieceTemplate);
-            g.transform.position = new Vector3(Id.latitude, Id.altitude, Id.longtitude);
+            g.transform.position = new Vector3(Id.latitude + 1.6f, Id.altitude - 1.9f, Id.longtitude + 7.2f);
             /*
             Color c = new Color();
             switch (Id.locType)
