@@ -138,6 +138,7 @@
                 {
                     if (CurrentNumberOfGameObjects == numberOfGameObjectsAllowed)
                     {
+                        ARObject.GetComponent<TaskController>().RemoveContainers();
                         Destroy(ARObject);
                         CurrentNumberOfGameObjects = 0;
                     }
@@ -156,12 +157,12 @@
                         else
                         {
 
-                            ARObject = Instantiate(ARAndroidPrefab, hit.Pose.position, hit.Pose.rotation);// Instantiate Andy model at the hit pose.             
+                            ARObject = Instantiate(ARAndroidPrefab, hit.Pose.position, Quaternion.identity);// Instantiate Andy model at the hit pose.             
                             TaskControllerObject = ARObject.GetComponent<TaskController>();
 
                             // @TODO Modify the rotation of this so it faces upwards                                                                    
-                            ARObject.transform.Rotate(90, 0, 0, Space.Self);// Compensate for the hitPose rotation facing away from the raycast (i.e. camera).
-
+                            //ARObject.transform.Rotate(90, 0, 0, Space.Self);// Compensate for the hitPose rotation facing away from the raycast (i.e. camera).
+                            ARObject.transform.LookAt(FirstPersonCamera.transform);
 
                             var anchor = hit.Trackable.CreateAnchor(hit.Pose);
                             ARObject.transform.parent = anchor.transform;
@@ -172,6 +173,7 @@
                             {
                                 Temp.SetActive(false);
                             }
+                            
                         }
 
                     }
@@ -182,8 +184,8 @@
 
         }
 
-
     }
+
 }
 
 

@@ -31,7 +31,7 @@ public class AirtableInterface : MonoBehaviour {
 
     public void GetData()
     {
-        if (!f_connectingToAirtable)
+        if (!f_connectingToAirtable && !f_dataAcquired)
         {
             getData();
         }
