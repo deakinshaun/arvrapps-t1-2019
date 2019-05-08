@@ -19,10 +19,8 @@ public class TaskController : MonoBehaviour
     {
         if (AirtableInterface.Singleton.f_dataAcquired && !f_datafull)
         {
-            
             foreach (DatabaseEntry _entry in AirtableInterface.Singleton.Database)
             {
-
                 CreateNewTask(_entry.Title, _entry.Content);
             }
 

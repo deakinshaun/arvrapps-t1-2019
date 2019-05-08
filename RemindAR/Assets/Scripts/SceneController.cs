@@ -136,6 +136,7 @@
                 Debug.Log("Touch Began");
                 if (Frame.Raycast(touch.position.x, touch.position.y, raycastFilter, out hit))
                 {
+
                     if (CurrentNumberOfGameObjects == numberOfGameObjectsAllowed)
                     {
                         ARObject.GetComponent<TaskController>().RemoveContainers();
