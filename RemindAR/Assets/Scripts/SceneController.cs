@@ -126,7 +126,7 @@
         {
             Touch touch;
             touch = Input.GetTouch(0);
-            Debug.Log("touch count is " + Input.touchCount);
+            //Debug.Log("touch count is " + Input.touchCount);
             TrackableHit hit;      // Raycast against the location the player touched to search for planes.
             TrackableHitFlags raycastFilter = TrackableHitFlags.PlaneWithinPolygon |
             TrackableHitFlags.FeaturePointWithSurfaceNormal;
@@ -145,7 +145,7 @@
                     }
                     if (CurrentNumberOfGameObjects < numberOfGameObjectsAllowed)
                     {
-                        Debug.Log("Screen Touched");
+                        //Debug.Log("Screen Touched");
                         
                         // Use hit pose and camera pose to check if hittest is from the
                         // back of the plane, if it is, no need to create the anchor.
@@ -180,7 +180,13 @@
                     }
 
                 }
-
+                // RaycastHit rayHit;
+                // Ray ray = FirstPersonCamera.ScreenPointToRay(new Vector2(touch.position.x, touch.position.y));
+                // if (Physics.Raycast(ray, out rayHit))
+                // {
+                //     Transform objectHit = rayHit.transform;
+                //     ARInput = Instantiate(InputDevice, rayHit.transform.position, rayHit.transform.rotation);
+                // }
             }
 
         }

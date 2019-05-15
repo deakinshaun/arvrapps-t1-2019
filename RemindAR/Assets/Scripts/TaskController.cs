@@ -23,14 +23,14 @@ public class TaskController : MonoBehaviour
             {
                 CreateNewTask(_entry.Title, _entry.Content);
             }
-
+            f_datafull = true;
         }
-        f_datafull = true;
+        
     }
 
     void CreateNewTask( string _title, string _content)
     {
-        var _location = transform.position + (Vector3.forward * 0.2f * TaskContainers.Count);
+        var _location = transform.position + (Vector3.right * 0.25f * TaskContainers.Count) + (Vector3.forward * -0.01f);
         var _taskContainerObject = Instantiate(TaskContainerPrefab, _location, transform.rotation);
         var _taskContainer = _taskContainerObject.GetComponent<TaskContainer>();
 
