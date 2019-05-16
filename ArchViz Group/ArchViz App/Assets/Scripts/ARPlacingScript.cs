@@ -86,7 +86,7 @@ public class ARPlacingScript : MonoBehaviour
 
     private void UpdatePlacementPose()
     {
-        var screen_centre = Camera.current.ViewportToScreenPoint(new Vector3(0.5f, 0.5f));    // Variable passed on tp raycast which converts the cnetre of the camera view to screen points 
+        var screen_centre = Camera.current.ViewportToScreenPoint(new Vector3(0.5f, 0.5f));  // Variable passed on tp raycast which converts the cnetre of the camera view to screen points 
         var hits = new List<ARRaycastHit>();       //Creating a new empty list to store if the virtual raycast hits anything in the real world
         ar_origin.Raycast(screen_centre, hits, TrackableType.Planes);
 

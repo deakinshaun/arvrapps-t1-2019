@@ -60,7 +60,7 @@ public class DrawingManager : MonoBehaviour
 
     void Update()
     {
-        if(((Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved) || Input.GetMouseButton(0)))
+        if(((Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Stationary) || Input.GetMouseButton(0)))
         {
             RaycastCheck();
         }
@@ -71,7 +71,7 @@ public class DrawingManager : MonoBehaviour
     {
         RaycastHit hit;
         // TODO:Change next line to supprt touch on mobile devices.
-        Ray ray = camera.ScreenPointToRay(Input.mousePosition);
+        Ray ray = camera.ScreenPointToRay(Input.GetTouch(0).position);
 
         if (Physics.Raycast(ray.origin, ray.direction, out hit, Mathf.Infinity))
         {
