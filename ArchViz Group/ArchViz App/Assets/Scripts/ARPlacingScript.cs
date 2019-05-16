@@ -19,6 +19,8 @@ public class ARPlacingScript : MonoBehaviour
 
     GameObject model_placed;
 
+    private bool _isPlaced = false;
+
     void Start()
     {
         ar_origin = FindObjectOfType<ARSessionOrigin>();   //Creating an instance as soon as thr app starts
@@ -28,10 +30,14 @@ public class ARPlacingScript : MonoBehaviour
     void Update()
     {
         UpdatePlacementPose();
-        UpdatePlacementIndicator();
-        if (placement_pose_valid && Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Began)  //Only place object is surface is valid, user touching the screen and only on the inital tap
+        if (!_isPlaced)
         {
-            PlaceModel();
+            UpdatePlacementIndicator();
+            if (placement_pose_valid && Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Began)  //Only place object is surface is valid, user touching the screen and only on the inital tap
+            {
+                PlaceModel();
+                _isPlaced = true;
+            }
         }
         UpdateModel();        //Function to rotate and scale the model
     }
@@ -39,16 +45,23 @@ public class ARPlacingScript : MonoBehaviour
     private void UpdateModel()
     {
         if(Input.touchCount == 2 && Input.GetTouch(0).phase == TouchPhase.Moved)
-        { 
+        {
             Touch touch_zero = Input.GetTouch(0);      //Storing touch one
             Touch touch_one = Input.GetTouch(1);       //Storing touch 2
-            Vector3 touch_zero_distance = touch_zero.position - touch_zero.deltaPosition;        //Calculating the difference between the first finger touches
-            Vector3 touch_one_distance = touch_one.position - touch_one.deltaPosition;           //Calculating the difference between the second finger touches
-            touch_distance = new Vector3((touch_zero_distance.x + touch_one_distance.x / 2), (touch_zero_distance.y + touch_one_distance.y / 2), 0.0f);           //Making an average of both finger displacement for better accuracy
-            model_placed.transform.Rotate(0, touch_distance.x * rotation_speed,0, Space.Self);       //Changing the rortation of the model in the y axis by using a 2 finger touch horizontal swipe
-            model_placed.transform.localScale += new Vector3 (touch_distance.y * scale_factor, touch_distance.y * scale_factor, touch_distance.y * scale_factor);           //Changing the scale of the model by using 2 finger touch in the vertical direction finger swipe
-            //Scaling needs a better way like a UI slider for better control. 
+            StartCoroutine(ScaleModel(touch_zero, touch_one));
         }
+    }
+
+    IEnumerator ScaleModel(Touch touch_zero, Touch touch_one)
+    {
+        
+        Vector3 touch_zero_distance = touch_zero.position - touch_zero.deltaPosition;        //Calculating the difference between the first finger touches
+        Vector3 touch_one_distance = touch_one.position - touch_one.deltaPosition;           //Calculating the difference between the second finger touches
+        touch_distance = new Vector3((touch_zero_distance.x + touch_one_distance.x / 2), (touch_zero_distance.y + touch_one_distance.y / 2), 0.0f);           //Making an average of both finger displacement for better accuracy
+        model_placed.transform.Rotate(0, touch_distance.x * rotation_speed, 0, Space.Self);       //Changing the rortation of the model in the y axis by using a 2 finger touch horizontal swipe
+        model_placed.transform.localScale += new Vector3(touch_distance.y * scale_factor, touch_distance.y * scale_factor, touch_distance.y * scale_factor);           //Changing the scale of the model by using 2 finger touch in the vertical direction finger swipe
+                                                                                                                                                                       //Scaling needs a better way like a UI slider for better control. 
+        yield return new WaitForEndOfFrame();
     }
 
     private void PlaceModel()
@@ -80,8 +93,6 @@ public class ARPlacingScript : MonoBehaviour
         //If no suitable surface found, cannot place object
         placement_pose_valid = hits.Count>0;
 
-
-
         if(placement_pose_valid)
         {
             placement_pose = hits[0].pose;   //Setting the placement pose to the suitable position found
@@ -93,8 +104,6 @@ public class ARPlacingScript : MonoBehaviour
             var camera_xz = new Vector3(camera_forward.x, 0, camera_forward.z).normalized;   //New vector to ignore y axis of camera
 
             placement_pose.rotation = Quaternion.LookRotation(camera_xz);     //Use the camera xz to change the direction of the placement indicator 
-            
-
         }
     }
 }
