@@ -16,12 +16,12 @@
 			if (_highlightMaterial == null)
 			{
 				_highlightMaterial = Instantiate(GetComponent<MeshRenderer>().material);
-				_highlightMaterial.color = Color.red;
+				_highlightMaterial.color = new Color(0.35f, 0.25f, 0.25f);
 			}
 
 			_meshRenderer = GetComponent<MeshRenderer>();
-			
-			foreach (var item in _meshRenderer.sharedMaterials)
+
+            foreach (var item in _meshRenderer.sharedMaterials)
 			{
 				_materials.Add(item);
 			}
@@ -35,6 +35,6 @@
 		public void OnMouseExit()
 		{
 			_meshRenderer.materials = _materials.ToArray();
-		}
+        }
 	}
 }
