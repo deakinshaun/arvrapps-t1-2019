@@ -20,7 +20,7 @@ public class ARPlacingScript : MonoBehaviour
     //Rotational speed of the moel. Needs to be a very low value like 0.01
     public float rotation_speed = 0.01f;
     //Float to control the scaling factor as its too fast
-    public float scale_factor = 0.001f;     
+    public float scale_factor = 1f;     
 
     //Creating an instance of the ARSessionIrigin which is the placing point of the model
     private ARSessionOrigin ar_origin;    
@@ -30,6 +30,12 @@ public class ARPlacingScript : MonoBehaviour
     private bool placement_pose_valid = false;     
     private GameObject model_placed;
     private bool _isPlaced = false;
+    private float rotation_value;
+    private float scale_value;
+    private bool _isLocked = false;
+    Vector3 touch_difference;
+    private float scale_stored;
+    private bool _isStored = false;
 
     void Start()
     {
@@ -52,30 +58,57 @@ public class ARPlacingScript : MonoBehaviour
 
     private void UpdateModel()
     {
-        if(Input.touchCount == 2 && Input.GetTouch(0).phase == TouchPhase.Moved)
+        if(!_isLocked)
         {
             Touch touch_zero = Input.GetTouch(0);      //Storing touch one
             Touch touch_one = Input.GetTouch(1);       //Storing touch 2
-            StartCoroutine(ScaleModel(touch_zero, touch_one));
+            
+            ScaleModel(touch_zero, touch_one);
         }
     }
-
-    IEnumerator ScaleModel(Touch touch_zero, Touch touch_one)
+    public void lock_change()
+    {
+        _isLocked = !_isLocked;
+    }
+    public void store_scale()
+    {
+        scale_stored = scale_value;
+        _isStored = true;
+        
+    }
+    public void apply_scale()
+    {
+        scale_value = scale_stored;
+    }
+ 
+   
+    public void ScaleModel(Touch touch_zero, Touch touch_one)
     {
         //Calculating the difference between the first finger touches
         Vector3 touch_zero_distance = touch_zero.position - touch_zero.deltaPosition;
         //Calculating the difference between the second finger touches
         Vector3 touch_one_distance = touch_one.position - touch_one.deltaPosition;
         //Making an average of both finger displacement for better accuracy
-        touch_distance = new Vector3((touch_zero_distance.x + touch_one_distance.x / 2), (touch_zero_distance.y + touch_one_distance.y / 2), 0.0f);
+        //touch_distance = new Vector3((touch_zero_distance.x + touch_one_distance.x / 2), (touch_zero_distance.y + touch_one_distance.y / 2), 0.0f);
+        //touch_difference = new Vector3(Mathf.Abs(touch_zero.position.x - touch_one.position.x), Mathf.Abs(touch_zero.position.y - touch_one.position.y), 0.0f);
+
+        float previous_touch_mag = (touch_zero_distance - touch_one_distance).magnitude;
+        float current_touch_mag = (touch_zero.position - touch_one.position).magnitude;
+
+        float pinch_differene = previous_touch_mag - current_touch_mag;
+
+        scale_value = Mathf.Clamp((pinch_differene * scale_factor) / 10, -1f, 1f);
+        //Setting the rotation value to the rotation_value parametre
+        rotation_value = (touch_zero_distance.y * rotation_speed) / 2;
+        //Setting the scaling value to scale_value parametre
+        //scale_value = Mathf.Clamp((pinch_differene * scale_factor) / 10, -1f, 1f);
         //Changing the rortation of the model in the y axis by using a 2 finger touch horizontal swipe
-        model_placed.transform.Rotate(0, touch_distance.x * rotation_speed, 0, Space.Self);
+        model_placed.transform.Rotate(0, rotation_value, 0, Space.Self);
+       
         //Changing the scale of the model by using 2 finger touch in the vertical direction finger swipe
-        model_placed.transform.localScale += new Vector3(touch_distance.y * scale_factor, touch_distance.y * scale_factor, touch_distance.y * scale_factor);
+        model_placed.transform.localScale += new Vector3(scale_value,scale_value,scale_value);
 
-        //TODO: Scaling needs a better way like a UI slider for better control. 
-
-        yield return new WaitForEndOfFrame();
+        
     }
 
     private void PlaceModel()
@@ -132,7 +165,7 @@ public class ARPlacingScript : MonoBehaviour
             //Setting the placement pose to the suitable position found
             placement_pose = hits[0].pose;   
 
-            placement_pose.position += touch_distance;
+            //placement_pose.position += touch_distance;
 
             //Get the forward direction of the camera
             var camera_forward = Camera.current.transform.forward;

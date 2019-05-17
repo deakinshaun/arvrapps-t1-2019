@@ -8,10 +8,13 @@ EditorBuildSettings:
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/1MapBox.unity
     guid: 2c7147d54825142878b256c67aae5704
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/4Scaling&Drawing.unity
     guid: 9f8162361a585084db53c255074be536
+  - enabled: 1
+    path: Assets/Scenes/2Scaling.unity
+    guid: 9471ac850b753f4499a2305eb6123635
   m_configObjects: {}
