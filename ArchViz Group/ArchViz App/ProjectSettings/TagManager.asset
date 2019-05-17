@@ -9,6 +9,8 @@ TagManager:
   - DrawingUI
   - DrawingManager
   - Model
+  - SceneButtons
+  - InstText
   layers:
   - Default
   - TransparentFX
