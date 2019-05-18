@@ -9,14 +9,16 @@ public class UIManager : MonoBehaviour
     // Reference to the MapBox UI
     [SerializeField]
     private GameObject ScalingUI;
-
     // Reference to the Drawing UI
     [SerializeField]
     private GameObject DrawingUI;
-
     // Reference to the Designing UI
     [SerializeField]
     private GameObject DesigningUI;
+
+    // Reference to the Instruction text
+    [SerializeField, Space]
+    private Text InstText;
 
     //Static instance of GameManager which allows it to be accessed by any other script.
     public static UIManager instance = null;
@@ -35,6 +37,11 @@ public class UIManager : MonoBehaviour
         //ScalingUI = transform.GetChild(1).gameObject;
         //DrawingUI = transform.GetChild(2).gameObject;
         //DesigningUI = transform.GetChild(3).gameObject;
+    }
+
+    public void ChangeText(string text)
+    {
+        InstText.text = text;
     }
 
     public void ChangeLevel(int i)
@@ -74,10 +81,10 @@ public class UIManager : MonoBehaviour
 
     void UpdateButtons(int level)
     {
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 3; i++)
         {
             Button button = GameObject.FindGameObjectWithTag("SceneButtons").transform.GetChild(i).GetComponent<Button>();
-            if (i == level)
+            if (i - 1 == level)
             {
                 button.interactable = false;
                 continue;

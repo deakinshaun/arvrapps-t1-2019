@@ -8,9 +8,6 @@ public class DrawingUI : MonoBehaviour
     [SerializeField]
     private DrawingManager drawingManager;
 
-    [SerializeField]
-    private Text InstText;
-
     // Water UI elements
     [SerializeField, Space]
     private GameObject WDrawButton;
@@ -35,7 +32,6 @@ public class DrawingUI : MonoBehaviour
         WViewButton = transform.GetChild(1).gameObject;
         EDrawButton = transform.GetChild(2).gameObject;
         EViewButton = transform.GetChild(3).gameObject;
-        InstText = transform.GetChild(4).gameObject.GetComponent<Text>();
 
         // Inititalse the scene
         drawingManager.IsDrawWater = false;
@@ -60,8 +56,6 @@ public class DrawingUI : MonoBehaviour
 
             //--------------------------------------------
             // UI tasks
-
-            InstText.text = "Marking Water Lines";
 
             // Set electricity view toggle to disabled
             EViewButton.GetComponent<Toggle>().isOn = false;
@@ -106,8 +100,6 @@ public class DrawingUI : MonoBehaviour
 
             //--------------------------------------------
             // UI tasks
-
-            InstText.text = "Marking Power Lines";
 
             // Set water view toggle to disabled
             WViewButton.GetComponent<Toggle>().isOn = false;

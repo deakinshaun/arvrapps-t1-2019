@@ -1,18 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;       //Allows us to use Lists. 
+using UnityEngine.SceneManagement;
 
 public class MainManager : MonoBehaviour
 {
-    private bool changesConfirmed;
+    //Static instance of GameManager which allows it to be accessed by any other script.
+    public static MainManager instance = null;
+
+    private int currentStage;
 
     [SerializeField]
     Vector3 storedScale;
 
-    // 
-
-    //Static instance of GameManager which allows it to be accessed by any other script.
-    public static MainManager instance = null;
 
     public Vector3 StoredScale { get => storedScale; set => storedScale = value; }
 
@@ -28,68 +28,47 @@ public class MainManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    // Coroutine for Mapbox level
-    IEnumerator MapboxLevel()
+    public void onModelPlaced()
     {
-        while (!changesConfirmed)
-        {
+        // Enable the Scaling UI
+        GameObject.FindGameObjectWithTag("ScalingUI").gameObject.SetActive(true);
 
+        // Change the text
+        if (currentStage == 1)
+        {
+            UIManager.instance.ChangeText("Use the UI to inspect");
         }
-        return null;
+        else if (currentStage == 2)
+        {
+            UIManager.instance.ChangeText("Tap on walls to draw power lines");
+        }
+        else
+        {
+            UIManager.instance.ChangeText("Choose an object to place inside the house");
+        }
     }
 
-    // Coroutine for Mapbox level
-    IEnumerator DrawingLevel()
+    public void OnConfirmStageExit()
     {
-        // Conditions for the Drawing scene which need to be met to progress to next scene
-        bool EPointPlaced = false;
-        bool WPointPlaced = false;
 
-
-        while (!changesConfirmed)
-        {
-
-        }
-
-        // Attach the model to this object
-
-        // Change Level
-
-        return null;
     }
-
-    // Coroutine for Mapbox level
-    IEnumerator DesigningLevel()
-    {
-        // Conditions for the Drawing scene which need to be met to progress to next scene
-        bool FurniturePlaced = false;
-        bool WallPainted = false;
-
-        while (!changesConfirmed)
-        {
-
-        }
-        return null;
-    }
-
 
     private void OnLevelWasLoaded(int level)
     {
-        changesConfirmed = false;
-
+        currentStage = level;
         switch (level)
         {
             // If mapbox level was loaded
             case 0:
-                StartCoroutine(MapboxLevel());
+                
                 break;
             // If drawing level was loaded
             case 1:
-                StartCoroutine(DrawingLevel());
+                
                 break;
             // If designing level was loaded
             case 3:
-                StartCoroutine(DesigningLevel());
+            
                 break;
         }
     }

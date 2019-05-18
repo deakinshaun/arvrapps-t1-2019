@@ -11,6 +11,10 @@ TagManager:
   - Model
   - SceneButtons
   - InstText
+  - ScalingUI
+  - ArchitectureUI
+  - ProgressButtons
+  - SaveButtons
   layers:
   - Default
   - TransparentFX

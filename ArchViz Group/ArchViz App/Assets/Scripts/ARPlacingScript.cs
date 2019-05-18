@@ -10,32 +10,37 @@ public class ARPlacingScript : MonoBehaviour
 {
     public Image image;
 
+    [Space]
     public GameObject model;
     //Creating a prefab of a workable plane
     public GameObject base_plane;    
 
+    [Space]
     public GameObject placement_indicator;
     //Distance to be moved by 2 finger touch
     public Vector3 touch_distance;
     //Rotational speed of the moel. Needs to be a very low value like 0.01
     public float rotation_speed = 0.01f;
     //Float to control the scaling factor as its too fast
-    public float scale_factor = 1f;     
+    public float scale_factor = 1f;
+    private Vector3 touch_difference;
+
+    private float rotation_value;
+    private float scale_value;
+    private bool _isLocked = false;
+    
+    private float scale_stored;
+    private bool _isStored = false;
+
 
     //Creating an instance of the ARSessionIrigin which is the placing point of the model
     private ARSessionOrigin ar_origin;    
     //Indidcator and position of the models placement
     private Pose placement_pose;          
     //Creating a boolean to check if there is a suitable plane to place the model
-    private bool placement_pose_valid = false;     
+    private bool placement_pose_valid = false;   
     private GameObject model_placed;
     private bool _isPlaced = false;
-    private float rotation_value;
-    private float scale_value;
-    private bool _isLocked = false;
-    Vector3 touch_difference;
-    private float scale_stored;
-    private bool _isStored = false;
 
     void Start()
     {
@@ -50,8 +55,6 @@ public class ARPlacingScript : MonoBehaviour
         {
             PlaceModel();
         }
-            
-  
         //Function to rotate and scale the model
         UpdateModel();        
     }
@@ -66,22 +69,12 @@ public class ARPlacingScript : MonoBehaviour
             ScaleModel(touch_zero, touch_one);
         }
     }
+
     public void lock_change()
     {
         _isLocked = !_isLocked;
     }
-    public void store_scale()
-    {
-        scale_stored = scale_value;
-        _isStored = true;
-        
-    }
-    public void apply_scale()
-    {
-        scale_value = scale_stored;
-    }
  
-   
     public void ScaleModel(Touch touch_zero, Touch touch_one)
     {
         //Calculating the difference between the first finger touches
@@ -107,8 +100,6 @@ public class ARPlacingScript : MonoBehaviour
        
         //Changing the scale of the model by using 2 finger touch in the vertical direction finger swipe
         model_placed.transform.localScale += new Vector3(scale_value,scale_value,scale_value);
-
-        
     }
 
     private void PlaceModel()
@@ -121,7 +112,9 @@ public class ARPlacingScript : MonoBehaviour
         {
             model_placed = Instantiate(model, placement_pose.position, placement_pose.rotation);
             _isPlaced = true;
-            
+
+            MainManager.instance.onModelPlaced();
+
             int count = GameObject.FindGameObjectWithTag("Model").transform.childCount;
             GameObject.FindGameObjectWithTag("DrawingManager").transform.SetParent(
             GameObject.FindGameObjectWithTag("Model").transform);
