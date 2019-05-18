@@ -6,10 +6,15 @@ public class MainManager : MonoBehaviour
 {
     private bool changesConfirmed;
 
+    [SerializeField]
+    Vector3 storedScale;
+
     // 
 
     //Static instance of GameManager which allows it to be accessed by any other script.
     public static MainManager instance = null;
+
+    public Vector3 StoredScale { get => storedScale; set => storedScale = value; }
 
     void Awake()
     {
