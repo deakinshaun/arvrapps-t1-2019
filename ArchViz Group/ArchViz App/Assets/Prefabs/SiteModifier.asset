@@ -21,12 +21,5 @@ MonoBehaviour:
     scaleDownWithWorld: 1
     _prefabLocations:
     - -37.844723, 145.110616
-    _explicitlyBlockedFeatureIds: []
-  - Name: Cube 1
-    active: 1
-    prefab: {fileID: 7311228092855372482, guid: ae35b593ad5373d44a20e416ba8c01b1,
-      type: 3}
-    scaleDownWithWorld: 1
-    _prefabLocations:
     - -37.847176, 145.114744
     _explicitlyBlockedFeatureIds: []
