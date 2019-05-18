@@ -79,6 +79,7 @@ public class DrawingUI : MonoBehaviour
             // Switch Image to Redo Image 
             WDrawButton.transform.GetChild(0).gameObject.SetActive(false);
             WDrawButton.transform.GetChild(1).gameObject.SetActive(true);
+            Debug.Log("Getting some fucking thing right");
 
             // Switch Electricity Redo logo
             EDrawButton.transform.GetChild(0).gameObject.SetActive(true);
