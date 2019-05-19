@@ -15,9 +15,20 @@ public class MainManager : MonoBehaviour
     [SerializeField]
     Vector3 storedScale;
 
+    [SerializeField]
+    bool AchitectureDone;
+    [SerializeField]
+    bool DrawingDone;
+    [SerializeField]
+    bool InteriorDone;
+
 
     public Vector3 StoredScale { get => storedScale; set => storedScale = value; }
     public bool ModelSelected { get => modelSelected; set => modelSelected = value; }
+
+    public bool AchitectureDone1 { get => AchitectureDone; set => AchitectureDone = value; }
+    public bool DrawingDone1 { get => DrawingDone; set => DrawingDone = value; }
+    public bool InteriorDone1 { get => InteriorDone; set => InteriorDone = value; }
 
     void Awake()
     {
@@ -40,10 +51,7 @@ public class MainManager : MonoBehaviour
         if (currentStage == 1)
         {
             UIManager.instance.ChangeText("Use the UI to inspect");
-            // Turn stage progress icon blue
-
-            // Turn on Save Button
-
+            //UIManager.instance.OnLevelProgress(
         }
         else if (currentStage == 2)
         {
@@ -52,19 +60,6 @@ public class MainManager : MonoBehaviour
         else
         {
             UIManager.instance.ChangeText("Choose an object to place inside the house");
-        }
-    }
-
-    public void OnConfirmStageExit()
-    {
-        // Initiate Lodaing Screen
-
-        // Change the level accordingly
-        if(currentStage == 0)
-        {
-            SceneManager.LoadScene(1); 
-
-            // Update UI
         }
     }
 

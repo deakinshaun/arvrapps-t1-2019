@@ -84,9 +84,15 @@ public class UIManager : MonoBehaviour
             case 0:
                 break;
             case 1:
-                if (MainManager.instance.ModelSelected)
+                if (!MainManager.instance.ModelSelected)
                 {
+                    MainManager.instance.ModelSelected = true;
                     ChangeText("Place Model on Tick");
+                }
+                else
+                {
+                    AProgressButton.GetComponentInChildren<Image>().color = Color.yellow;
+                    ASaveButton.enabled = true;
                 }
                 break;
         }

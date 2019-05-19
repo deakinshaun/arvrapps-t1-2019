@@ -1309,6 +1309,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
+      objectReference: {fileID: 8848438980090465947}
+    - target: {fileID: 5181612364110329785, guid: 025536b561ca2f749b4c15c41c6cd977,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: OnModelSelect
+      objectReference: {fileID: 0}
+    - target: {fileID: 5181612364110329785, guid: 025536b561ca2f749b4c15c41c6cd977,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5181612363527595552, guid: 025536b561ca2f749b4c15c41c6cd977,
         type: 3}
@@ -1338,7 +1348,7 @@ PrefabInstance:
     - target: {fileID: 5181612363816335921, guid: 025536b561ca2f749b4c15c41c6cd977,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.000013778538
+      value: 0.0002780906
       objectReference: {fileID: 0}
     - target: {fileID: 5181612363527595555, guid: 025536b561ca2f749b4c15c41c6cd977,
         type: 3}
@@ -1708,7 +1718,7 @@ PrefabInstance:
     - target: {fileID: 5181612364419045248, guid: 025536b561ca2f749b4c15c41c6cd977,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0.9999985
+      value: 0.9999993
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 025536b561ca2f749b4c15c41c6cd977, type: 3}
@@ -1722,6 +1732,16 @@ PrefabInstance:
     - target: {fileID: 3860842210374686388, guid: 28bdccd767b32a841bfcb21f6e23889c,
         type: 3}
       propertyPath: m_Name
+      value: ScalingUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3860842210374686388, guid: 28bdccd767b32a841bfcb21f6e23889c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3860842210374686388, guid: 28bdccd767b32a841bfcb21f6e23889c,
+        type: 3}
+      propertyPath: m_TagString
       value: ScalingUI
       objectReference: {fileID: 0}
     - target: {fileID: 8076624062373407529, guid: 28bdccd767b32a841bfcb21f6e23889c,
@@ -1781,3 +1801,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 28bdccd767b32a841bfcb21f6e23889c, type: 3}
+--- !u!114 &8848438980090465947 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3860842210374686389, guid: 28bdccd767b32a841bfcb21f6e23889c,
+    type: 3}
+  m_PrefabInstance: {fileID: 8848438980090465946}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 119ec1abb5142074ba819226d59a011a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

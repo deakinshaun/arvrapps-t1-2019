@@ -26,6 +26,11 @@ public class ScalingUI : MonoBehaviour
         placedModel = GameObject.FindGameObjectWithTag("Model").gameObject;
     }
 
+    public void OnModelSelect()
+    {
+        UIManager.instance.OnLevelProgress();
+    }
+
     public void UnlockScale()
     {
         is_scaleStored = false;
