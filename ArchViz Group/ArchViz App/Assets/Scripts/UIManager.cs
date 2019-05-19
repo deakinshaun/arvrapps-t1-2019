@@ -58,12 +58,30 @@ public class UIManager : MonoBehaviour
 
     public void Save()
     {
-        MainManager.instance.OnConfirmStageExit();
+        //MainManager.instance.OnConfirmStageExit();
     }
 
-    public void ChangeProgress(int color, int progress)
+    public void ChangeProgress(float value)
     {
+        switch (value)
+        {
+            case 0:
+                break;
+            case 1:
+                if (!MainManager.instance.ModelSelected)
+                {
+                    MainManager.instance.ModelSelected = true;
+                    ChangeText("Place Model on Tick");
+                }
+                else
+                {
+                    AProgressButton.GetComponentInChildren<Image>().color = Color.yellow;
+                    ASaveButton.enabled = true;
 
+                    //if()
+                }
+                break;
+        }
     }
 
 
