@@ -6,22 +6,41 @@ using System.Collections.Generic;       //Allows us to use Lists.
 
 public class UIManager : MonoBehaviour
 {
-    // Reference to the MapBox UI
-    [SerializeField]
-    private GameObject ScalingUI;
-    // Reference to the Drawing UI
-    [SerializeField]
-    private GameObject DrawingUI;
-    // Reference to the Designing UI
-    [SerializeField]
-    private GameObject DesigningUI;
-
-    // Reference to the Instruction text
-    [SerializeField, Space]
-    private Text InstText;
-
     //Static instance of GameManager which allows it to be accessed by any other script.
     public static UIManager instance = null;
+
+    int currentStage = 0;
+
+    [SerializeField]
+    private Text InstText;
+
+    [SerializeField, Space]
+    Button AButton;
+    [SerializeField]
+    Button EButton;
+    [SerializeField]
+    Button IButton;
+
+    [SerializeField, Space]
+    Button AProgressButton;
+    [SerializeField]
+    Button EProgressButton;
+    [SerializeField]
+    Button IProgressButton;
+
+    [SerializeField, Space]
+    Button ASaveButton;
+    [SerializeField]
+    Button ESaveButton;
+    [SerializeField]
+    Button ISaveButton;
+
+    Color Disabled = new Color(82, 82, 82, 128);
+
+    private GameObject ArchitectureUI;
+    private GameObject ScalingUI;
+    private GameObject DrawingUI;
+    private GameObject DesigningUI;
 
     void Awake()
     {
@@ -34,10 +53,19 @@ public class UIManager : MonoBehaviour
         //Sets this to not be destroyed when reloading scene
         DontDestroyOnLoad(gameObject);
 
-        //ScalingUI = transform.GetChild(1).gameObject;
-        //DrawingUI = transform.GetChild(2).gameObject;
-        //DesigningUI = transform.GetChild(3).gameObject;
+        ChangeText("Tap on a site");
     }
+
+    public void Save()
+    {
+        MainManager.instance.OnConfirmStageExit();
+    }
+
+    public void ChangeProgress(int color, int progress)
+    {
+
+    }
+
 
     public void ChangeText(string text)
     {
@@ -49,47 +77,57 @@ public class UIManager : MonoBehaviour
         SceneManager.LoadScene(i);
     }
 
-    private void OnLevelWasLoaded(int level)
+    public void OnLevelProgress()
     {
-        UpdateButtons(level);
-        switch (level)
+        switch (currentStage)
         {
-            // If mapbox level was loaded
             case 0:
-                ScalingUI.gameObject.SetActive(false);
-                DrawingUI.gameObject.SetActive(false);
-                DesigningUI.gameObject.SetActive(false);
                 break;
-            // If drawing level was loaded
             case 1:
-                ScalingUI.gameObject.SetActive(false);
-                DrawingUI.gameObject.SetActive(true);
-                DesigningUI.gameObject.SetActive(false);
-                break;
-            // If designing level was loaded
-            case 3:
-                ScalingUI.gameObject.SetActive(false);
-                DrawingUI.gameObject.SetActive(false);
-                DesigningUI.gameObject.SetActive(true);
+                if (MainManager.instance.ModelSelected)
+                {
+                    ChangeText("Place Model on Tick");
+                }
                 break;
         }
     }
 
-    public void ToggleScalingUI(bool active) { ScalingUI.gameObject.SetActive(active); }
-    public void ToggleDrawingUI(bool active) { DrawingUI.gameObject.SetActive(active); }
-    public void ToggleDesigningBoxUI(bool active) { DesigningUI.gameObject.SetActive(active); }
+    private void OnLevelWasLoaded(int level)
+    {
+        currentStage = level;
+
+        //UpdateButtons(level);
+        switch (level)
+        {
+            case 0:
+                
+                break;
+
+            case 1:
+                ChangeText("Select a model to place");
+                AButton.GetComponent<Image>().color = Color.green;
+                AProgressButton.GetComponentInChildren<Image>().color = Color.red;
+                EProgressButton.GetComponentInChildren<Image>().color = Color.red;
+                IProgressButton.GetComponentInChildren<Image>().color = Color.red;
+                EButton.interactable = false;
+                IButton.interactable = false;
+                ASaveButton.interactable = false;
+                ESaveButton.interactable = false;
+                ISaveButton.interactable = false;
+                break;
+
+            case 2:
+
+                break;
+  
+            case 3:
+                
+                break;
+        }
+    }
 
     void UpdateButtons(int level)
     {
-        for (int i = 0; i < 3; i++)
-        {
-            Button button = GameObject.FindGameObjectWithTag("SceneButtons").transform.GetChild(i).GetComponent<Button>();
-            if (i - 1 == level)
-            {
-                button.interactable = false;
-                continue;
-            }
-            button.interactable = true;
-        }
+        
     }
 }

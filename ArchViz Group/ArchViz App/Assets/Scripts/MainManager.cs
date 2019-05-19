@@ -10,11 +10,14 @@ public class MainManager : MonoBehaviour
 
     private int currentStage;
 
+    private bool modelSelected;
+
     [SerializeField]
     Vector3 storedScale;
 
 
     public Vector3 StoredScale { get => storedScale; set => storedScale = value; }
+    public bool ModelSelected { get => modelSelected; set => modelSelected = value; }
 
     void Awake()
     {
@@ -37,6 +40,10 @@ public class MainManager : MonoBehaviour
         if (currentStage == 1)
         {
             UIManager.instance.ChangeText("Use the UI to inspect");
+            // Turn stage progress icon blue
+
+            // Turn on Save Button
+
         }
         else if (currentStage == 2)
         {
@@ -50,7 +57,15 @@ public class MainManager : MonoBehaviour
 
     public void OnConfirmStageExit()
     {
+        // Initiate Lodaing Screen
 
+        // Change the level accordingly
+        if(currentStage == 0)
+        {
+            SceneManager.LoadScene(1); 
+
+            // Update UI
+        }
     }
 
     private void OnLevelWasLoaded(int level)
