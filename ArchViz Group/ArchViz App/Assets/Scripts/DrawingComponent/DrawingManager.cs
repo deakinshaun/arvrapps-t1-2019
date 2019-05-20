@@ -42,6 +42,10 @@ public class DrawingManager : MonoBehaviour
     [SerializeField]
     private LineRenderer WlineRenderer;
 
+    // Boolean to check when the requirements
+    bool WPointConditionMet = false;
+    bool EPointConditionMet = false;
+
     public bool IsDrawWater { get => isDrawWater; set => isDrawWater = value; }
 
     private void Start()
@@ -128,6 +132,12 @@ public class DrawingManager : MonoBehaviour
                 WlineRenderer.SetPosition(i, WList[i].transform.position);
             }
 
+            // After 2 Markers -> Progress in Main Manager
+            if (WList.Count == 2 && !WPointConditionMet)
+            {
+                WPointConditionMet = true;
+                MainManager.instance.OnLevelProgress();
+            }
             // Enable if the points need to be hidden
             /*
             foreach(GameObject go in WList)
@@ -145,6 +155,12 @@ public class DrawingManager : MonoBehaviour
                 ElineRenderer.SetPosition(i, EList[i].transform.position);
             }
 
+            // After 2 Markers -> Progress in Main Manager
+            if (EList.Count == 2 && !EPointConditionMet)
+            {
+                EPointConditionMet = true;
+                MainManager.instance.OnLevelProgress();
+            }
             // Enable if the points need to be hidden
             /*
             foreach (GameObject go in EList)
@@ -190,4 +206,6 @@ public class DrawingManager : MonoBehaviour
         // Disable all the points in the list
         this.transform.GetChild(1).gameObject.SetActive(status);
     }
+
+
 }

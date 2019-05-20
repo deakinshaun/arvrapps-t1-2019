@@ -113,7 +113,7 @@ public class ARPlacingScript : MonoBehaviour
             model_placed = Instantiate(model, placement_pose.position, placement_pose.rotation);
             _isPlaced = true;
 
-            MainManager.instance.onModelPlaced();
+            MainManager.instance.OnLevelProgress();
 
             int count = GameObject.FindGameObjectWithTag("Model").transform.childCount;
             GameObject.FindGameObjectWithTag("DrawingManager").transform.SetParent(

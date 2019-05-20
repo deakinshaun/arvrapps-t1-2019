@@ -22,11 +22,11 @@ public class UIManager : MonoBehaviour
     Button IButton;
 
     [SerializeField, Space]
-    Button AProgressButton;
+    Image AProgress;
     [SerializeField]
-    Button EProgressButton;
+    Image EProgress;
     [SerializeField]
-    Button IProgressButton;
+    Image IProgress;
 
     [SerializeField, Space]
     Button ASaveButton;
@@ -53,65 +53,70 @@ public class UIManager : MonoBehaviour
         //Sets this to not be destroyed when reloading scene
         DontDestroyOnLoad(gameObject);
 
-        ChangeText("Tap on a site");
+        ChangeText("Tap on a site", false);
     }
 
-    public void Save()
+    public void OnLevelProgress(int code)
     {
-        //MainManager.instance.OnConfirmStageExit();
-    }
-
-    public void ChangeProgress(float value)
-    {
-        switch (value)
+        switch (code)
         {
-            case 0:
+            //----Architecture Scene
+            case 21:
+                ChangeText("Place model on green 'Tick'", false);
                 break;
-            case 1:
-                if (!MainManager.instance.ModelSelected)
-                {
-                    MainManager.instance.ModelSelected = true;
-                    ChangeText("Place Model on Tick");
-                }
-                else
-                {
-                    AProgressButton.GetComponentInChildren<Image>().color = Color.yellow;
-                    ASaveButton.enabled = true;
-
-                    //if()
-                }
+            // Model Placed
+            case 22:
+                ChangeText("Save your changes", false);
+                GameObject.FindGameObjectWithTag("ScalingUI").SetActive(true);
+                AProgress.color = Color.yellow;
+                ASaveButton.interactable = true;
                 break;
-        }
-    }
-
-
-    public void ChangeText(string text)
-    {
-        InstText.text = text;
-    }
-
-    public void ChangeLevel(int i)
-    {
-        SceneManager.LoadScene(i);
-    }
-
-    public void OnLevelProgress()
-    {
-        switch (currentStage)
-        {
-            case 0:
+            // On Save
+            case 23:
+                UIManager.instance.ChangeText("Your work is saved", false);
+                AProgress.color = Color.green;
+                ASaveButton.interactable = false;
+                EButton.interactable = enabled;
                 break;
-            case 1:
-                if (!MainManager.instance.ModelSelected)
-                {
-                    MainManager.instance.ModelSelected = true;
-                    ChangeText("Place Model on Tick");
-                }
-                else
-                {
-                    AProgressButton.GetComponentInChildren<Image>().color = Color.yellow;
-                    ASaveButton.enabled = true;
-                }
+            //----Drawing Stage
+            case 31:
+                ChangeText("Tap on wall to place point", false);
+                break;
+            case 32:
+                ChangeText("Try using the other line", false);
+                break;
+            // Power/Water Lines Drawn
+            case 33:
+                ChangeText("Save your progress", false);
+                EProgress.color = Color.yellow;
+                ESaveButton.interactable = true;
+                break;
+            // On Saved
+            case 34:
+                ChangeText("Your work is saved", false);
+                EProgress.color = Color.blue;
+                ESaveButton.interactable = false;
+                IButton.interactable = true;
+                break;
+            //----Interior Stage
+            case 41:
+                ChangeText("Place a furniture", false);
+                break;
+            // Furniture placed
+            case 42:
+                ChangeText("Paint a wall or save", false);
+                ISaveButton.interactable = true;
+                EProgress.color = Color.yellow;
+                break;
+            case 43:
+                ChangeText("Save your progress", false);
+                break;
+            case 44:
+                ChangeText("Your work is saved", false);
+                IProgress.color = Color.green;
+                break;
+            default:
+                ChangeText("", false);
                 break;
         }
     }
@@ -124,34 +129,41 @@ public class UIManager : MonoBehaviour
         switch (level)
         {
             case 0:
-                
+                ChangeText("Select a site", false);
                 break;
-
+            // On map box level load
             case 1:
-                ChangeText("Select a model to place");
+                ChangeText("Place the model", false);
                 AButton.GetComponent<Image>().color = Color.green;
-                AProgressButton.GetComponentInChildren<Image>().color = Color.red;
-                EProgressButton.GetComponentInChildren<Image>().color = Color.red;
-                IProgressButton.GetComponentInChildren<Image>().color = Color.red;
-                EButton.interactable = false;
-                IButton.interactable = false;
-                ASaveButton.interactable = false;
-                ESaveButton.interactable = false;
-                ISaveButton.interactable = false;
                 break;
-
             case 2:
-
+                ChangeText("Place the model", false);
+                EButton.GetComponent<Image>().color = Color.green;
                 break;
-  
             case 3:
-                
+                ChangeText("Place the model", false);
+                IButton.GetComponent<Image>().color = Color.green;
                 break;
         }
     }
 
-    void UpdateButtons(int level)
+    public void ChangeText(string text, bool important)
     {
-        
+        InstText.text = text;
+        if (important)
+            InstText.color = Color.red;
+        else
+            InstText.color = Color.green;
+    }
+
+    public void ChangeLevel(int i)
+    {
+        if(currentStage != i)
+            SceneManager.LoadScene(i);
+    }
+
+    public void Save()
+    {
+        MainManager.instance.OnSave();
     }
 }

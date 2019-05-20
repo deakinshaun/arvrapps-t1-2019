@@ -10,25 +10,22 @@ public class MainManager : MonoBehaviour
 
     private int currentStage;
 
-    private bool modelSelected;
+    [SerializeField]
+    int ArchitectureDone = 20;
+    [SerializeField]
+    int DrawingDone = 30;
+    [SerializeField]
+    int InteriorDone = 40;
 
+    public int AchitectureDone1 { get => ArchitectureDone; set => ArchitectureDone = value; }
+    public int DrawingDone1 { get => DrawingDone; set => DrawingDone = value; }
+    public int InteriorDone1 { get => InteriorDone; set => InteriorDone = value; }
+
+    private bool modelSelected;
     [SerializeField]
     Vector3 storedScale;
-
-    [SerializeField]
-    bool AchitectureDone;
-    [SerializeField]
-    bool DrawingDone;
-    [SerializeField]
-    bool InteriorDone;
-
-
     public Vector3 StoredScale { get => storedScale; set => storedScale = value; }
     public bool ModelSelected { get => modelSelected; set => modelSelected = value; }
-
-    public bool AchitectureDone1 { get => AchitectureDone; set => AchitectureDone = value; }
-    public bool DrawingDone1 { get => DrawingDone; set => DrawingDone = value; }
-    public bool InteriorDone1 { get => InteriorDone; set => InteriorDone = value; }
 
     void Awake()
     {
@@ -42,43 +39,106 @@ public class MainManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    public void onModelPlaced()
+    public void OnLevelProgress()
     {
-        // Enable the Scaling UI
-        GameObject.FindGameObjectWithTag("ScalingUI").gameObject.SetActive(true);
-
-        // Change the text
-        if (currentStage == 1)
+        switch (currentStage)
         {
-            UIManager.instance.ChangeText("Use the UI to inspect");
-            //UIManager.instance.OnLevelProgress(
-        }
-        else if (currentStage == 2)
-        {
-            UIManager.instance.ChangeText("Tap on walls to draw power lines");
-        }
-        else
-        {
-            UIManager.instance.ChangeText("Choose an object to place inside the house");
+            case 0:
+                break;
+            case 1:
+                ArchitectureDone++;
+                // Model Selected
+                if (ArchitectureDone == 21)
+                {
+                    UIManager.instance.OnLevelProgress(21);
+                }
+                // Model Placed
+                if(ArchitectureDone == 22)
+                {
+                    UIManager.instance.OnLevelProgress(22);
+                }
+                // Saved
+                if (ArchitectureDone == 23)
+                {
+                    UIManager.instance.OnLevelProgress(23);
+                    // Enable Next Stage
+                    // Change colour
+                    // Disable save
+                }
+                break;
+            case 2:
+                DrawingDone++;
+                // Model Placed
+                if(DrawingDone == 31)
+                {
+                    UIManager.instance.OnLevelProgress(31);
+                }
+                // One type of line drawn 
+                if (DrawingDone == 32)
+                {
+                    UIManager.instance.OnLevelProgress(32);
+                }
+                // 2nd type of line drawn 
+                if (DrawingDone == 33)
+                {
+                    UIManager.instance.OnLevelProgress(33);
+                    // Enable save button
+                    // Turn progress bar to yellow
+                }
+                // Saved
+                if(DrawingDone == 34)
+                {
+                    UIManager.instance.OnLevelProgress(34);
+                    // Enable level button
+                    // Turn progress bar to blue
+                }
+                break;
+            case 3:
+                InteriorDone++;
+                // Model Placed
+                if(InteriorDone == 41)
+                {
+                    UIManager.instance.OnLevelProgress(41);
+                }
+                // Furniture placed
+                if (InteriorDone == 42)
+                {
+                    UIManager.instance.OnLevelProgress(42);
+                    // Enable save button
+                    // Turn progress bar to yellow
+                }
+                if (InteriorDone == 43)
+                {
+                    UIManager.instance.OnLevelProgress(43);
+                }
+                if (InteriorDone == 44)
+                {
+                    UIManager.instance.OnLevelProgress(44);
+                }
+                break;
         }
     }
 
-    private void OnLevelWasLoaded(int level)
+    public void BeforeLevelLoad()
     {
-        currentStage = level;
-        switch (level)
+
+    }
+
+    public void OnSave()
+    {
+        switch (currentStage)
         {
-            // If mapbox level was loaded
-            case 0:
-                
-                break;
-            // If drawing level was loaded
             case 1:
-                
+                ArchitectureDone = 23;
+                UIManager.instance.OnLevelProgress(23);
                 break;
-            // If designing level was loaded
+            case 2:
+                DrawingDone = 34;
+                UIManager.instance.OnLevelProgress(34);
+                break;
             case 3:
-            
+                InteriorDone = 44;
+                UIManager.instance.OnLevelProgress(44);
                 break;
         }
     }

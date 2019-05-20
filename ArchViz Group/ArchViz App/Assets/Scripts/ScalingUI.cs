@@ -28,7 +28,7 @@ public class ScalingUI : MonoBehaviour
 
     public void OnModelSelect()
     {
-        UIManager.instance.OnLevelProgress();
+        MainManager.instance.OnLevelProgress();
     }
 
     public void UnlockScale()
@@ -62,7 +62,7 @@ public class ScalingUI : MonoBehaviour
         for (float t = 0; t < 1; t += Time.deltaTime / scaleDuration)
         {
             placedModel.transform.localScale = Vector3.Lerp(currentScale, storedScale, t);
-            yield return null;
+            yield return new WaitForEndOfFrame();
         }
     }
 
