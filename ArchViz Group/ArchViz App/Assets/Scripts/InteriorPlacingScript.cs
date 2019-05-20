@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.Experimental.XR;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using System;
 
 public class InteriorPlacingScript : MonoBehaviour
@@ -40,6 +41,14 @@ public class InteriorPlacingScript : MonoBehaviour
 
     private bool _isCoffeePlaced = false;          //Boolean to see if coffee table was placed
 
+    private int fingerID = -1;
+    private void Awake()
+    {
+        #if !UNITY_EDITOR
+            fingerID = 0; 
+        #endif
+    }
+
     void Start()
     {
         //Creating an instance as soon as thr app starts
@@ -48,12 +57,13 @@ public class InteriorPlacingScript : MonoBehaviour
 
     void Update()
     {
+        if (EventSystem.current.IsPointerOverGameObject(fingerID))
+        {
+            PlaceModel();      //Function to place models in the scene
 
-        PlaceModel();      //Function to place models in the scene
- 
-        //Function to rotate and scale the model
-        UpdateModel();
-        
+            //Function to rotate and scale the model
+            UpdateModel();
+        }
     }
 
     private void UpdateModel()

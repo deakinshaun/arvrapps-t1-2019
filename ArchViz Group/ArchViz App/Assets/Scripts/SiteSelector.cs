@@ -38,7 +38,7 @@ public class SiteSelector : MonoBehaviour
         RaycastHit hit;
 
         // TODO:Change next line to supprt touch on mobile devices.
-        Ray ray = camera.ScreenPointToRay(Input.mousePosition);
+        Ray ray = camera.ScreenPointToRay(Input.GetTouch(0).position);
 
         // If it hits a building (Collision box)
         if (Physics.Raycast(ray.origin, ray.direction, out hit, Mathf.Infinity))
@@ -48,7 +48,7 @@ public class SiteSelector : MonoBehaviour
                 siteCanvas.enabled = true;
 
                 // Move UI corner next to the selected building
-                MoveUI(Input.mousePosition);
+                MoveUI(Input.GetTouch(0).position);
 
                 // If the line hits the wall of the construction site
                 if (hit.collider != null && hit.collider.gameObject.tag == "CSite")

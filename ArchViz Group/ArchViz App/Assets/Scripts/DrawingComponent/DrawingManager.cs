@@ -12,7 +12,6 @@ public class DrawingManager : MonoBehaviour
     [SerializeField]
     private DrawingUI drawingUI;
 
-
     // Number of electricity line points
     [SerializeField, Space]
     private int EPoints = 0;
@@ -48,6 +47,15 @@ public class DrawingManager : MonoBehaviour
 
     public bool IsDrawWater { get => isDrawWater; set => isDrawWater = value; }
 
+
+    private int fingerID = -1;
+    private void Awake()
+    {
+        #if !UNITY_EDITOR
+            fingerID = 0; 
+        #endif
+    }
+
     private void Start()
     {
         if(ElineRenderer == null || EMarker == null)
@@ -79,7 +87,7 @@ public class DrawingManager : MonoBehaviour
 
         if (Physics.Raycast(ray.origin, ray.direction, out hit, Mathf.Infinity))
         {
-            if(EventSystem.current.IsPointerOverGameObject() == false)
+            if(EventSystem.current.IsPointerOverGameObject(fingerID))
             {
                 Debug.Log(hit.collider.name + " was hit.");
 

@@ -21,12 +21,14 @@ public class MainManager : MonoBehaviour
     public int DrawingDone1 { get => DrawingDone; set => DrawingDone = value; }
     public int InteriorDone1 { get => InteriorDone; set => InteriorDone = value; }
 
-    private GameObject mainModel;
     bool isMainModelSelected = false;
+    [SerializeField]
+    private GameObject mainModel;
     [SerializeField]
     Vector3 storedScale;
     public Vector3 StoredScale { get => storedScale; set => storedScale = value; }
     public GameObject MainModel { get => mainModel; set => mainModel = value; }
+    public bool IsMainModelSelected { get => isMainModelSelected; }
 
     void Awake()
     {
@@ -42,22 +44,26 @@ public class MainManager : MonoBehaviour
 
     public void OnLevelProgress()
     {
+        Debug.Log(currentStage);
         switch (currentStage)
         {
             case 0:
                 break;
             case 1:
                 ArchitectureDone++;
+                Debug.Log(ArchitectureDone);
                 // Model Selected
                 if (ArchitectureDone == 21)
                 {
+                    Debug.Log("Model Selected");
+                    isMainModelSelected = true;
                     UIManager.instance.OnLevelProgress(21);
                 }
                 // Model Placed
-                if(ArchitectureDone == 22)
+                if (ArchitectureDone == 22)
                 {
                     mainModel = GameObject.FindGameObjectWithTag("Model").gameObject;
-                    isMainModelSelected = true;
+                    //IsMainModelSelected = true;
                     UIManager.instance.OnLevelProgress(22);
                 }
                 // Saved
@@ -72,7 +78,7 @@ public class MainManager : MonoBehaviour
             case 2:
                 DrawingDone++;
                 // Model Placed
-                if(DrawingDone == 31)
+                if (DrawingDone == 31)
                 {
                     UIManager.instance.OnLevelProgress(31);
                 }
@@ -89,7 +95,7 @@ public class MainManager : MonoBehaviour
                     // Turn progress bar to yellow
                 }
                 // Saved
-                if(DrawingDone == 34)
+                if (DrawingDone == 34)
                 {
                     UIManager.instance.OnLevelProgress(34);
                     // Enable level button
@@ -99,7 +105,7 @@ public class MainManager : MonoBehaviour
             case 3:
                 InteriorDone++;
                 // Model Placed
-                if(InteriorDone == 41)
+                if (InteriorDone == 41)
                 {
                     UIManager.instance.OnLevelProgress(41);
                 }
@@ -144,5 +150,10 @@ public class MainManager : MonoBehaviour
                 UIManager.instance.OnLevelProgress(44);
                 break;
         }
+    }
+
+    private void OnLevelWasLoaded(int level)
+    {
+        currentStage = level;
     }
 }

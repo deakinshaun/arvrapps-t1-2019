@@ -16,23 +16,9 @@ public class ScalingUI : MonoBehaviour
     bool is_scale_buttonUP = false;
     bool is_rotate_buttonUP = false;
 
-    private void Start()
-    {
-        //placedModel = GameObject.FindGameObjectWithTag("Model").gameObject;
-        if(MainManager.instance.MainModel != null)
-            MainManager.instance.MainModel = placedModel;
-        else
-            placedModel = GameObject.FindGameObjectWithTag("Model").gameObject;
-    }
-
     public void SetModel()
     {
         placedModel = GameObject.FindGameObjectWithTag("Model").gameObject;
-    }
-
-    public void OnModelSelect()
-    {
-        MainManager.instance.OnLevelProgress();
     }
 
     public void UnlockScale()

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.Experimental.XR;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using System;
 
 public class ARPlacingScript : MonoBehaviour
@@ -42,6 +43,14 @@ public class ARPlacingScript : MonoBehaviour
     private GameObject model_placed;
     private bool _isPlaced = false;
 
+    private int fingerID = -1;
+    private void Awake()
+    {
+        #if !UNITY_EDITOR
+            fingerID = 0; 
+        #endif
+    }
+
     void Start()
     {
         //Creating an instance as soon as thr app starts
@@ -51,12 +60,12 @@ public class ARPlacingScript : MonoBehaviour
     void Update()
     {
         // If model is not already placed
-        if (!_isPlaced)
+        if (!_isPlaced && MainManager.instance.IsMainModelSelected)
         {
             PlaceModel();
         }
         //Function to rotate and scale the model
-        UpdateModel();        
+        UpdateModel();
     }
 
     private void UpdateModel()
@@ -113,11 +122,12 @@ public class ARPlacingScript : MonoBehaviour
             model_placed = Instantiate(model, placement_pose.position, placement_pose.rotation);
             _isPlaced = true;
 
+            MainManager.instance.MainModel = model_placed;
             MainManager.instance.OnLevelProgress();
 
-            int count = GameObject.FindGameObjectWithTag("Model").transform.childCount;
+            int count = model_placed.transform.childCount;
             GameObject.FindGameObjectWithTag("DrawingManager").transform.SetParent(
-            GameObject.FindGameObjectWithTag("Model").transform);
+            model_placed.transform);
             if (GameObject.FindGameObjectWithTag("Model").transform.childCount > count)
             {
                 image.color = Color.green;

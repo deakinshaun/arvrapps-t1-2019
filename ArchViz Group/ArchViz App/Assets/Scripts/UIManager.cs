@@ -13,6 +13,8 @@ public class UIManager : MonoBehaviour
 
     [SerializeField]
     private Text InstText;
+    [SerializeField]
+    public Text DebugText;
 
     [SerializeField, Space]
     Button AButton;
@@ -58,6 +60,7 @@ public class UIManager : MonoBehaviour
 
     public void OnLevelProgress(int code)
     {
+        //DebugText.text = DebugText.text + "\n"+code;
         switch (code)
         {
             //----Architecture Scene
@@ -67,7 +70,7 @@ public class UIManager : MonoBehaviour
             // Model Placed
             case 22:
                 ChangeText("Save your changes", false);
-                GameObject.FindGameObjectWithTag("ScalingUI").SetActive(true);
+                GameObject.FindGameObjectWithTag("ScalingUI").transform.GetChild(0).gameObject.SetActive(true);
                 AProgress.color = Color.yellow;
                 ASaveButton.interactable = true;
                 break;
@@ -80,6 +83,7 @@ public class UIManager : MonoBehaviour
                 break;
             //----Drawing Stage
             case 31:
+                GameObject.FindGameObjectWithTag("ScalingUI").transform.GetChild(0).gameObject.SetActive(true);
                 ChangeText("Tap on wall to place point", false);
                 break;
             case 32:
@@ -100,6 +104,7 @@ public class UIManager : MonoBehaviour
                 break;
             //----Interior Stage
             case 41:
+                GameObject.FindGameObjectWithTag("ScalingUI").transform.GetChild(0).gameObject.SetActive(true);
                 ChangeText("Place a furniture", false);
                 break;
             // Furniture placed
@@ -123,6 +128,8 @@ public class UIManager : MonoBehaviour
 
     private void OnLevelWasLoaded(int level)
     {
+        if (transform.GetChild(3).gameObject.activeSelf == true)
+            transform.GetChild(3).gameObject.SetActive(false);
         currentStage = level;
 
         //UpdateButtons(level);
@@ -133,16 +140,18 @@ public class UIManager : MonoBehaviour
                 break;
             // On map box level load
             case 1:
-                ChangeText("Place the model", false);
+                ChangeText("Select a Model", false);
                 AButton.GetComponent<Image>().color = Color.green;
                 break;
             case 2:
                 ChangeText("Place the model", false);
                 EButton.GetComponent<Image>().color = Color.green;
+                AButton.GetComponent<Image>().color = Color.white;
                 break;
             case 3:
                 ChangeText("Place the model", false);
                 IButton.GetComponent<Image>().color = Color.green;
+                EButton.GetComponent<Image>().color = Color.white;
                 break;
         }
     }
