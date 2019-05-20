@@ -21,11 +21,12 @@ public class MainManager : MonoBehaviour
     public int DrawingDone1 { get => DrawingDone; set => DrawingDone = value; }
     public int InteriorDone1 { get => InteriorDone; set => InteriorDone = value; }
 
-    private bool modelSelected;
+    private GameObject mainModel;
+    bool isMainModelSelected = false;
     [SerializeField]
     Vector3 storedScale;
     public Vector3 StoredScale { get => storedScale; set => storedScale = value; }
-    public bool ModelSelected { get => modelSelected; set => modelSelected = value; }
+    public GameObject MainModel { get => mainModel; set => mainModel = value; }
 
     void Awake()
     {
@@ -55,6 +56,8 @@ public class MainManager : MonoBehaviour
                 // Model Placed
                 if(ArchitectureDone == 22)
                 {
+                    mainModel = GameObject.FindGameObjectWithTag("Model").gameObject;
+                    isMainModelSelected = true;
                     UIManager.instance.OnLevelProgress(22);
                 }
                 // Saved
