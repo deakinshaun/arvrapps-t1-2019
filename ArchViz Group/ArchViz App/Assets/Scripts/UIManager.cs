@@ -71,6 +71,7 @@ public class UIManager : MonoBehaviour
             case 22:
                 ChangeText("Save your changes", false);
                 GameObject.FindGameObjectWithTag("ScalingUI").transform.GetChild(0).gameObject.SetActive(true);
+                GameObject.FindGameObjectWithTag("ScalingUI").GetComponent<ScalingUI>().SetModel();
                 AProgress.color = Color.yellow;
                 ASaveButton.interactable = true;
                 break;
@@ -84,6 +85,7 @@ public class UIManager : MonoBehaviour
             //----Drawing Stage
             case 31:
                 GameObject.FindGameObjectWithTag("ScalingUI").transform.GetChild(0).gameObject.SetActive(true);
+                GameObject.FindGameObjectWithTag("ScalingUI").GetComponent<ScalingUI>().SetModel();
                 ChangeText("Tap on wall to place point", false);
                 break;
             case 32:
@@ -105,6 +107,7 @@ public class UIManager : MonoBehaviour
             //----Interior Stage
             case 41:
                 GameObject.FindGameObjectWithTag("ScalingUI").transform.GetChild(0).gameObject.SetActive(true);
+                GameObject.FindGameObjectWithTag("ScalingUI").GetComponent<ScalingUI>().SetModel();
                 ChangeText("Place a furniture", false);
                 break;
             // Furniture placed

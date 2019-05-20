@@ -87,7 +87,7 @@ public class DrawingManager : MonoBehaviour
 
         if (Physics.Raycast(ray.origin, ray.direction, out hit, Mathf.Infinity))
         {
-            if(EventSystem.current.IsPointerOverGameObject(fingerID))
+            if(EventSystem.current.IsPointerOverGameObject(fingerID) == false)
             {
                 Debug.Log(hit.collider.name + " was hit.");
 

@@ -80,6 +80,7 @@ public class MainManager : MonoBehaviour
                 // Model Placed
                 if (DrawingDone == 31)
                 {
+                    mainModel = GameObject.FindGameObjectWithTag("Model").gameObject;
                     UIManager.instance.OnLevelProgress(31);
                 }
                 // One type of line drawn 
@@ -107,6 +108,7 @@ public class MainManager : MonoBehaviour
                 // Model Placed
                 if (InteriorDone == 41)
                 {
+                    mainModel = GameObject.FindGameObjectWithTag("Model").gameObject;
                     UIManager.instance.OnLevelProgress(41);
                 }
                 // Furniture placed
@@ -128,10 +130,6 @@ public class MainManager : MonoBehaviour
         }
     }
 
-    public void BeforeLevelLoad()
-    {
-
-    }
 
     public void OnSave()
     {
@@ -140,6 +138,8 @@ public class MainManager : MonoBehaviour
             case 1:
                 ArchitectureDone = 23;
                 UIManager.instance.OnLevelProgress(23);
+                // Save Model
+                mainModel.transform.parent = transform;
                 break;
             case 2:
                 DrawingDone = 34;

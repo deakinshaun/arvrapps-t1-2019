@@ -18,7 +18,10 @@ public class ScalingUI : MonoBehaviour
 
     public void SetModel()
     {
-        placedModel = GameObject.FindGameObjectWithTag("Model").gameObject;
+        if (MainManager.instance.MainModel == null)
+            placedModel = GameObject.FindGameObjectWithTag("Model").gameObject;
+        else
+            placedModel = MainManager.instance.MainModel;
     }
 
     public void UnlockScale()
