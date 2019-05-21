@@ -8,17 +8,16 @@ public class DrawingUI : MonoBehaviour
     [SerializeField]
     private DrawingManager drawingManager;
 
-    // Water UI elements
-    [SerializeField, Space]
-    private GameObject WDrawButton;
-    [SerializeField]
-    private GameObject WViewButton;
+    bool viewOn = false;
 
-    // Electricity elements
+    // UI elements
     [SerializeField, Space]
-    private GameObject EDrawButton;
+    private GameObject DrawButton;
     [SerializeField]
-    private GameObject EViewButton;
+    private GameObject ViewButton;
+    [SerializeField, Space]
+    private GameObject RedoButton;
+
 
     void Start()
     {
@@ -28,25 +27,21 @@ public class DrawingUI : MonoBehaviour
             Debug.Log("DrawingManager refernece not set in DrawingUI");
 
         // Get all the UI elements
-        WDrawButton = transform.GetChild(0).gameObject;
-        WViewButton = transform.GetChild(1).gameObject;
-        EDrawButton = transform.GetChild(2).gameObject;
-        EViewButton = transform.GetChild(3).gameObject;
+        DrawButton = transform.GetChild(0).gameObject;
+        ViewButton = transform.GetChild(1).gameObject;
+        RedoButton = transform.GetChild(2).gameObject;
 
         // Inititalse the scene
         drawingManager.IsDrawWater = false;
     }
 
-    public void OnClickWaterDraw()
+    public void OnClickDraw()
     {
-        if (drawingManager.IsDrawWater)
+        // If electricity then switch to water
+        if (!drawingManager.IsDrawWater)
         {
-            // Delete previous point
-            drawingManager.ErasePreviousPoint();
-        }
-        else
-        {
-            // Switch to Water Draw
+            Debug.Log("Switching to Water");
+            // Switch 
             drawingManager.IsDrawWater = true;
 
             // Enable water line renderer
@@ -57,81 +52,68 @@ public class DrawingUI : MonoBehaviour
             //--------------------------------------------
             // UI tasks
 
-            // Set electricity view toggle to disabled
-            EViewButton.GetComponent<Toggle>().isOn = false;
-
-            //Disable WView Toggle
-            WViewButton.gameObject.SetActive(false);
-            // Enable EView Toggle
-            EViewButton.gameObject.SetActive(true);
-
-            // Set background color to green
-            WDrawButton.GetComponent<Image>().color = Color.green;
-            // Set background color of electricity draw to white
-            EDrawButton.GetComponent<Image>().color = Color.white;
-
-            // Switch Image to Redo Image 
-            WDrawButton.transform.GetChild(0).gameObject.SetActive(false);
-            WDrawButton.transform.GetChild(1).gameObject.SetActive(true);
-            Debug.Log("Getting some fucking thing right");
-
-            // Switch Electricity Redo logo
-            EDrawButton.transform.GetChild(0).gameObject.SetActive(true);
-            EDrawButton.transform.GetChild(1).gameObject.SetActive(false);
+            // Switch Water Image to Electricity Image 
+            DrawButton.transform.GetChild(0).gameObject.SetActive(true);
+            DrawButton.transform.GetChild(1).gameObject.SetActive(false);
         }
-    }
-
-    public void OnClickElectricityDraw()
-    {
-        if (!drawingManager.IsDrawWater)
-        {
-            // Delete previous point
-            drawingManager.ErasePreviousPoint();
-        }
+        // If water then switch to electricity
         else
         {
-            // Switch to Water Draw
+            // Switch 
             drawingManager.IsDrawWater = false;
 
-            // Enable electricity line renderer
-            drawingManager.DisplayELineRender(true);
+            Debug.Log("Switching to Electricity");
             // Disable water line renderer
+            drawingManager.DisplayELineRender(true);
+            // Enable electricity line renderer
             drawingManager.DisplayWLineRender(false);
 
             //--------------------------------------------
             // UI tasks
 
-            // Set water view toggle to disabled
-            WViewButton.GetComponent<Toggle>().isOn = false;
-
-            // Disable EView Toggle
-            EViewButton.gameObject.SetActive(false);
-            // Enable WView Toggle
-            WViewButton.gameObject.SetActive(true);
-
-            // Set background color to green
-            EDrawButton.GetComponent<Image>().color = Color.green;
-            // Set background color of water draw to white
-            WDrawButton.GetComponent<Image>().color = Color.white;
-
-            // Switch Image to Redo Image 
-            EDrawButton.transform.GetChild(0).gameObject.SetActive(false);
-            EDrawButton.transform.GetChild(1).gameObject.SetActive(true);
-            // Switch Electricity Redo logo
-            WDrawButton.transform.GetChild(0).gameObject.SetActive(true);
-            WDrawButton.transform.GetChild(1).gameObject.SetActive(false);
+            // Switch Electricity Image to water Image 
+            DrawButton.transform.GetChild(0).gameObject.SetActive(false);
+            DrawButton.transform.GetChild(1).gameObject.SetActive(true);
         }
+        viewOn = false;
     }
 
-    public void OnClickWaterView(bool status)
+    public void OnRedoButton()
     {
-        drawingManager.DisplayWLineRender(status);
-        WViewButton.transform.GetChild(1).gameObject.SetActive(!status);
+        drawingManager.ErasePreviousPoint();
     }
 
-    public void OnClickElectricityView(bool status)
+    public void OnClickView()
     {
-        drawingManager.DisplayELineRender(status);
-        EViewButton.transform.GetChild(1).gameObject.SetActive(!status);
+        viewOn = !viewOn;
+
+        if (viewOn)
+        {
+            if (!drawingManager.IsDrawWater)
+            {
+                drawingManager.DisplayWLineRender(true);
+            }
+            else
+            {
+                drawingManager.DisplayELineRender(true);
+            }
+            ViewButton.transform.GetChild(1).gameObject.SetActive(false);
+            ViewButton.transform.GetChild(2).gameObject.SetActive(true);
+        }
+        else
+        {
+            if (!drawingManager.IsDrawWater)
+            {
+                drawingManager.DisplayWLineRender(false);
+            }
+            else
+            {
+                drawingManager.DisplayELineRender(false);
+            }
+            ViewButton.transform.GetChild(1).gameObject.SetActive(true);
+            ViewButton.transform.GetChild(2).gameObject.SetActive(false);
+        }
+
+        
     }
 }
