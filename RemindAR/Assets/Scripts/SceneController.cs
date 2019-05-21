@@ -126,7 +126,7 @@
         {
             Touch touch;
             touch = Input.GetTouch(0);
-            Debug.Log("touch count is " + Input.touchCount);
+            //Debug.Log("touch count is " + Input.touchCount);
             TrackableHit hit;      // Raycast against the location the player touched to search for planes.
             TrackableHitFlags raycastFilter = TrackableHitFlags.PlaneWithinPolygon |
             TrackableHitFlags.FeaturePointWithSurfaceNormal;
@@ -136,14 +136,16 @@
                 Debug.Log("Touch Began");
                 if (Frame.Raycast(touch.position.x, touch.position.y, raycastFilter, out hit))
                 {
+
                     if (CurrentNumberOfGameObjects == numberOfGameObjectsAllowed)
                     {
+                        ARObject.GetComponent<TaskController>().RemoveContainers();
                         Destroy(ARObject);
                         CurrentNumberOfGameObjects = 0;
                     }
                     if (CurrentNumberOfGameObjects < numberOfGameObjectsAllowed)
                     {
-                        Debug.Log("Screen Touched");
+                        //Debug.Log("Screen Touched");
                         
                         // Use hit pose and camera pose to check if hittest is from the
                         // back of the plane, if it is, no need to create the anchor.
@@ -156,12 +158,12 @@
                         else
                         {
 
-                            ARObject = Instantiate(ARAndroidPrefab, hit.Pose.position, hit.Pose.rotation);// Instantiate Andy model at the hit pose.             
+                            ARObject = Instantiate(ARAndroidPrefab, hit.Pose.position, Quaternion.identity);// Instantiate Andy model at the hit pose.             
                             TaskControllerObject = ARObject.GetComponent<TaskController>();
 
                             // @TODO Modify the rotation of this so it faces upwards                                                                    
-                            ARObject.transform.Rotate(90, 0, 0, Space.Self);// Compensate for the hitPose rotation facing away from the raycast (i.e. camera).
-
+                            //ARObject.transform.Rotate(90, 0, 0, Space.Self);// Compensate for the hitPose rotation facing away from the raycast (i.e. camera).
+                            ARObject.transform.LookAt(FirstPersonCamera.transform);
 
                             var anchor = hit.Trackable.CreateAnchor(hit.Pose);
                             ARObject.transform.parent = anchor.transform;
@@ -172,18 +174,25 @@
                             {
                                 Temp.SetActive(false);
                             }
+                            
                         }
 
                     }
 
                 }
-
+                // RaycastHit rayHit;
+                // Ray ray = FirstPersonCamera.ScreenPointToRay(new Vector2(touch.position.x, touch.position.y));
+                // if (Physics.Raycast(ray, out rayHit))
+                // {
+                //     Transform objectHit = rayHit.transform;
+                //     ARInput = Instantiate(InputDevice, rayHit.transform.position, rayHit.transform.rotation);
+                // }
             }
 
         }
 
-
     }
+
 }
 
 

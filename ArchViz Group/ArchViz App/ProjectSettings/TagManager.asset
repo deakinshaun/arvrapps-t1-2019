@@ -3,7 +3,20 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - EMarker
+  - WMarker
+  - DrawingUI
+  - DrawingManager
+  - Model
+  - SceneButtons
+  - InstText
+  - ScalingUI
+  - ArchitectureUI
+  - ProgressButtons
+  - SaveButtons
+  - CSite
+  - InteriorUI
   layers:
   - Default
   - TransparentFX
