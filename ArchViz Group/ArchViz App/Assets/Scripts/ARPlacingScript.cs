@@ -43,6 +43,11 @@ public class ARPlacingScript : MonoBehaviour
     private GameObject model_placed;
     private bool _isPlaced = false;
 
+
+    public List<GameObject> models = new List<GameObject>();      //Creating a chooseable list of furniture to further add more model placement if wanted
+
+    private bool _isCoffeePlaced = false;          //Boolean to see if coffee table was placed
+
     private int fingerID = -1;
     private void Awake()
     {
@@ -116,11 +121,26 @@ public class ARPlacingScript : MonoBehaviour
         // Start Plane Tracking
         UpdatePlacementPose();
         UpdatePlacementIndicator();
-        //Only place object is surface is valid, user touching the screen and only on the inital tap
-        if (placement_pose_valid && Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Began)
+
+        if (placement_pose_valid && Input.GetTouch(0).phase == TouchPhase.Began && !_isCoffeePlaced)
         {
-            model_placed = Instantiate(model, placement_pose.position, placement_pose.rotation);
-            _isPlaced = true;
+
+            if (_isPlaced && !_isCoffeePlaced && Input.touchCount == 1)              //If house is placed set next model to place to be the coffee table
+            {
+
+                //GameObject temp = model;              //Store the house model in temp
+                //model = models[0];                       //Setting current model to be furniture prefab
+                GameObject table = Instantiate(models[0], placement_pose.position, placement_pose.rotation);     //Spawn the table prefab
+                _isCoffeePlaced = true;
+                table.transform.parent = model_placed.transform;        //Set the coffee to be a child of the house
+                                                                        //model_placed = model;
+
+            }
+            if (!_isPlaced || !_isCoffeePlaced && Input.touchCount == 1)
+            {
+                model_placed = Instantiate(model, placement_pose.position, placement_pose.rotation);
+                _isPlaced = true;
+            }
 
             MainManager.instance.MainModel = model_placed;
             MainManager.instance.OnLevelProgress();

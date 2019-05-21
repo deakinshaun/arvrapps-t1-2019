@@ -332,6 +332,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 28bdccd767b32a841bfcb21f6e23889c, type: 3}
+--- !u!224 &50725293 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3944305181317286264, guid: 28bdccd767b32a841bfcb21f6e23889c,
+    type: 3}
+  m_PrefabInstance: {fileID: 50725292}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &79207394
 GameObject:
   m_ObjectHideFlags: 0
@@ -1079,6 +1085,8 @@ MonoBehaviour:
   touch_distance: {x: 0, y: 0, z: 0}
   rotation_speed: 0.01
   scale_factor: 0.001
+  models:
+  - {fileID: 8790852024475954838, guid: 0b438be9d9321924b87625ac71d76fe4, type: 3}
 --- !u!4 &357233911
 Transform:
   m_ObjectHideFlags: 0
@@ -1258,7 +1266,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 485173951}
-  - {fileID: 829938653}
+  - {fileID: 50725293}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2128,12 +2136,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 813083196}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
---- !u!4 &829938653 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8076624062373407529, guid: 28bdccd767b32a841bfcb21f6e23889c,
-    type: 3}
-  m_PrefabInstance: {fileID: 50725292}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &854939677
 GameObject:
   m_ObjectHideFlags: 0

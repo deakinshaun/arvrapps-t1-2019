@@ -479,7 +479,7 @@ MonoBehaviour:
   rotation_speed: 0.01
   scale_factor: 0.001
   models:
-  - {fileID: 100000, guid: 13948485c9b76be4a9ea03555289de6e, type: 3}
+  - {fileID: 8790852024475954838, guid: 0b438be9d9321924b87625ac71d76fe4, type: 3}
 --- !u!4 &357233911
 Transform:
   m_ObjectHideFlags: 0
@@ -2723,7 +2723,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   drawingManager: {fileID: 4415465145932094143}
-  InstText: {fileID: 0}
   WDrawButton: {fileID: 4415465145790346046}
   WViewButton: {fileID: 0}
   EDrawButton: {fileID: 4415465144717991204}
