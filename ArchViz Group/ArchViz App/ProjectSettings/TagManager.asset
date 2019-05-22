@@ -17,6 +17,9 @@ TagManager:
   - SaveButtons
   - CSite
   - InteriorUI
+  - AR
+  - Lock
+  - SaveZoom
   layers:
   - Default
   - TransparentFX

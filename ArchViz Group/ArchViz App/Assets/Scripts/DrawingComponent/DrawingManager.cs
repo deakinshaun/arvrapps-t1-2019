@@ -9,8 +9,8 @@ public class DrawingManager : MonoBehaviour
     private Camera camera;
     [SerializeField]
     private bool isDrawWater;
-    [SerializeField]
-    private DrawingUI drawingUI;
+    //[SerializeField]
+    //private DrawingUI drawingUI;
 
     // Number of electricity line points
     [SerializeField, Space]
@@ -66,7 +66,7 @@ public class DrawingManager : MonoBehaviour
         {
             Debug.Log("Water Line Renderer or Marker not attached to script");
         }
-
+        Rerender();
         // Setup UI
     }
 
@@ -83,7 +83,7 @@ public class DrawingManager : MonoBehaviour
     {
         RaycastHit hit;
         // TODO:Change next line to supprt touch on mobile devices.
-        Ray ray = camera.ScreenPointToRay(Input.GetTouch(0).position);
+        Ray ray = camera.ScreenPointToRay(Input.mousePosition);
 
         if (Physics.Raycast(ray.origin, ray.direction, out hit, Mathf.Infinity))
         {
@@ -177,6 +177,25 @@ public class DrawingManager : MonoBehaviour
             }
             */
         }
+    }
+
+    public void Rerender()
+    {
+        GameObject[] Etemp = GameObject.FindGameObjectsWithTag("EMarker");
+        GameObject[] Wtemp = GameObject.FindGameObjectsWithTag("WMarker");
+        EList.Clear();
+        WList.Clear();
+        for(int i = 0; i < Etemp.Length; i++)
+        {
+            EList[i] = Etemp[i];
+        }
+        for (int i = 0; i < Wtemp.Length; i++)
+        {
+            WList[i] = Wtemp[i];
+        }
+        LineRender();
+        IsDrawWater = !IsDrawWater;
+        LineRender();
     }
 
     public void ErasePreviousPoint()

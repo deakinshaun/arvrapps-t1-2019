@@ -1,20 +1,79 @@
 fileFormatVersion: 2
-guid: 13948485c9b76be4a9ea03555289de6e
+guid: 1e26b5e96fc402741a57f53a57482d88
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
-    100000: //RootNode
-    400000: //RootNode
+    100000: Camera
+    100002: Cube
+    100004: Cube.001
+    100006: Cube.002
+    100008: Cube.003
+    100010: Cube.004
+    100012: Cube.005
+    100014: Cube.006
+    100016: Cube.007
+    100018: Cube.008
+    100020: Cube.009
+    100022: Cylinder
+    100024: Cylinder.001
+    100026: //RootNode
+    100028: Lamp
+    400000: Camera
+    400002: Cube
+    400004: Cube.001
+    400006: Cube.002
+    400008: Cube.003
+    400010: Cube.004
+    400012: Cube.005
+    400014: Cube.006
+    400016: Cube.007
+    400018: Cube.008
+    400020: Cube.009
+    400022: Cylinder
+    400024: Cylinder.001
+    400026: //RootNode
+    400028: Lamp
+    2000000: Camera
     2100000: No Name
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: table
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: No Name
-    second: {fileID: 2100000, guid: bc3d7bf4f03c4d740b43abb3d543180b, type: 2}
+    2100002: Material
+    2300000: Cube
+    2300002: Cube.001
+    2300004: Cube.002
+    2300006: Cube.003
+    2300008: Cube.004
+    2300010: Cube.005
+    2300012: Cube.006
+    2300014: Cube.007
+    2300016: Cube.008
+    2300018: Cube.009
+    2300020: Cylinder
+    2300022: Cylinder.001
+    3300000: Cube
+    3300002: Cube.001
+    3300004: Cube.002
+    3300006: Cube.003
+    3300008: Cube.004
+    3300010: Cube.005
+    3300012: Cube.006
+    3300014: Cube.007
+    3300016: Cube.008
+    3300018: Cube.009
+    3300020: Cylinder
+    3300022: Cylinder.001
+    4300000: Cylinder.001
+    4300002: Cylinder
+    4300004: Cube.009
+    4300006: Cube.008
+    4300008: Cube.007
+    4300010: Cube.005
+    4300012: Cube.006
+    4300014: Cube.002
+    4300016: Cube.003
+    4300018: Cube.004
+    4300020: Cube.001
+    4300022: Cube
+    10800000: Lamp
+  externalObjects: {}
   materials:
     importMaterials: 1
     materialName: 0
@@ -45,7 +104,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 0.3
+    globalScale: 1
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1

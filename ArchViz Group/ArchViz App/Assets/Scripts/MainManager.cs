@@ -30,6 +30,9 @@ public class MainManager : MonoBehaviour
     public GameObject MainModel { get => mainModel; set => mainModel = value; }
     public bool IsMainModelSelected { get => isMainModelSelected; }
 
+    GameObject scalingUI;
+    GameObject drawingManager;
+
     void Awake()
     {
         //Creating a Singleton Pattern
@@ -63,7 +66,6 @@ public class MainManager : MonoBehaviour
                 if (ArchitectureDone == 22)
                 {
                     mainModel = GameObject.FindGameObjectWithTag("Model").gameObject;
-                    //IsMainModelSelected = true;
                     UIManager.instance.OnLevelProgress(22);
                 }
                 // Saved
@@ -139,14 +141,18 @@ public class MainManager : MonoBehaviour
                 ArchitectureDone = 23;
                 UIManager.instance.OnLevelProgress(23);
                 // Save Model
+                mainModel = GameObject.FindGameObjectWithTag("Model").gameObject;
                 mainModel.transform.parent = transform;
                 break;
             case 2:
                 DrawingDone = 34;
+                //mainModel.SetActive(false);
+                drawingManager.transform.parent = mainModel.transform;
                 UIManager.instance.OnLevelProgress(34);
                 break;
             case 3:
                 InteriorDone = 44;
+                //mainModel.SetActive(false);
                 UIManager.instance.OnLevelProgress(44);
                 break;
         }
@@ -155,5 +161,24 @@ public class MainManager : MonoBehaviour
     private void OnLevelWasLoaded(int level)
     {
         currentStage = level;
+        if(mainModel != null)
+        {
+            mainModel.gameObject.SetActive(false);
+        }
+        switch (level)
+        {
+            case 1:
+                scalingUI = GameObject.FindGameObjectWithTag("ScalingUI").gameObject;
+                break;
+            case 2:
+                scalingUI = GameObject.FindGameObjectWithTag("ScalingUI").gameObject;
+                drawingManager = GameObject.FindGameObjectWithTag("DrawingManager").gameObject;
+                break;
+            case 3:
+                GameObject.FindGameObjectWithTag("AR").GetComponent<ARPlacingScript>().Model = mainModel;
+                mainModel.SetActive(false);
+                break;
+        }
+
     }
 }
