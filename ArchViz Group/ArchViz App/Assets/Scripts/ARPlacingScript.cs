@@ -28,11 +28,10 @@ public class ARPlacingScript : MonoBehaviour
 
     private float rotation_value;
     private float scale_value;
-    private bool _isLocked = false;
+    private bool _isLocked = true;
     
     private float scale_stored;
     private bool _isStored = false;
-
 
     //Creating an instance of the ARSessionIrigin which is the placing point of the model
     private ARSessionOrigin ar_origin;    
@@ -43,12 +42,16 @@ public class ARPlacingScript : MonoBehaviour
     private GameObject model_placed;
     private bool _isPlaced = false;
 
+    int furnitureSelected = -1;
 
     public List<GameObject> models = new List<GameObject>();      //Creating a chooseable list of furniture to further add more model placement if wanted
 
     private bool _isCoffeePlaced = false;          //Boolean to see if coffee table was placed
 
     private int fingerID = -1;
+
+    public GameObject Model { get => model; set => model = value; }
+
     private void Awake()
     {
         #if !UNITY_EDITOR
@@ -60,6 +63,13 @@ public class ARPlacingScript : MonoBehaviour
     {
         //Creating an instance as soon as thr app starts
         ar_origin = FindObjectOfType<ARSessionOrigin>();   
+
+        if(MainManager.instance.MainModel != null)
+        {
+            MainManager.instance.MainModel.SetActive(true);
+            Model = MainManager.instance.MainModel;
+            MainManager.instance.MainModel.SetActive(false);
+        }
     }
    
     void Update()
@@ -84,8 +94,21 @@ public class ARPlacingScript : MonoBehaviour
         }
     }
 
+    public void OnFurnitureSelect(int i)
+    {
+        furnitureSelected = i;
+    }
+
     public void lock_change()
     {
+        if (_isLocked)
+        {
+            GameObject.FindGameObjectWithTag("Lock").GetComponent<Image>().color = Color.green;
+        }
+        else
+        {
+            GameObject.FindGameObjectWithTag("Lock").GetComponent<Image>().color = Color.red;
+        }
         _isLocked = !_isLocked;
     }
  
@@ -114,6 +137,11 @@ public class ARPlacingScript : MonoBehaviour
        
         //Changing the scale of the model by using 2 finger touch in the vertical direction finger swipe
         model_placed.transform.localScale += new Vector3(scale_value,scale_value,scale_value);
+
+        if (GameObject.FindGameObjectWithTag("DrawingManager") != null)
+        {
+            GameObject.FindGameObjectWithTag("DrawingManager").GetComponent<DrawingManager>().Rerender();
+        }
     }
 
     private void PlaceModel()
@@ -130,19 +158,32 @@ public class ARPlacingScript : MonoBehaviour
 
                 //GameObject temp = model;              //Store the house model in temp
                 //model = models[0];                       //Setting current model to be furniture prefab
-                GameObject table = Instantiate(models[0], placement_pose.position, placement_pose.rotation);     //Spawn the table prefab
-                _isCoffeePlaced = true;
-                table.transform.parent = model_placed.transform;        //Set the coffee to be a child of the house
-                                                                        //model_placed = model;
+                if(furnitureSelected > -1)
+                {
+                    GameObject table = Instantiate(models[furnitureSelected], placement_pose.position, placement_pose.rotation);     //Spawn the table prefab
+                    _isCoffeePlaced = true;
+                    table.transform.parent = model_placed.transform;        //Set the coffee to be a child of the house
+                                                                            //model_placed = model;
+                }
+                //cxv
 
             }
             if (!_isPlaced || !_isCoffeePlaced && Input.touchCount == 1)
             {
-                model_placed = Instantiate(model, placement_pose.position, placement_pose.rotation);
+               if(MainManager.instance.MainModel == null)
+                    model_placed = Instantiate(model, placement_pose.position, placement_pose.rotation);
+                else
+                {
+                    model_placed = MainManager.instance.MainModel;
+                    MainManager.instance.MainModel.SetActive(true);
+                    MainManager.instance.MainModel.transform.position = placement_pose.position;
+                    MainManager.instance.MainModel.transform.rotation = placement_pose.rotation;
+                }
                 _isPlaced = true;
             }
 
             MainManager.instance.MainModel = model_placed;
+
             MainManager.instance.OnLevelProgress();
 
             int count = model_placed.transform.childCount;

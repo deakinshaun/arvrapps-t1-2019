@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3398526995113709407
 RectTransform:
   m_ObjectHideFlags: 0
@@ -731,11 +731,11 @@ GameObject:
   - component: {fileID: 1791035526152018302}
   m_Layer: 0
   m_Name: SaveZoomLock
-  m_TagString: Untagged
+  m_TagString: SaveZoom
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1791035526152018303
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1545,6 +1545,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 119ec1abb5142074ba819226d59a011a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scaleZoomLock: {fileID: 0}
   storedScale: {x: 0, y: 0, z: 0}
   is_scaleStored: 0
   duration_Of_Lerp: 1
@@ -1636,7 +1637,7 @@ GameObject:
   - component: {fileID: 4668312462447322070}
   m_Layer: 0
   m_Name: Lock
-  m_TagString: Untagged
+  m_TagString: Lock
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1682,7 +1683,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1741,17 +1742,6 @@ MonoBehaviour:
       - m_Target: {fileID: 0}
         m_MethodName: lock_change
         m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 8979604229376488172}
-        m_MethodName: SetActive
-        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

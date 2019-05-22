@@ -131,13 +131,15 @@ public class UIManager : MonoBehaviour
 
     private void OnLevelWasLoaded(int level)
     {
+        transform.GetChild(2).gameObject.SetActive(false);
+
         if (transform.GetChild(3).gameObject.activeSelf == true)
             transform.GetChild(3).gameObject.SetActive(false);
         currentStage = level;
-
+        
         //UpdateButtons(level);
         switch (level)
-        {
+        { 
             case 0:
                 ChangeText("Select a site", false);
                 break;

@@ -161,7 +161,7 @@ GameObject:
   - component: {fileID: 357233910}
   m_Layer: 0
   m_Name: Placing
-  m_TagString: Untagged
+  m_TagString: AR
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -179,7 +179,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 0}
-  model: {fileID: 4623013955264860606, guid: 19abe30271e9bd74b860df18fb106efa, type: 3}
+  model: {fileID: 0}
   base_plane: {fileID: 3982341612019978317, guid: 2598f25384120ac4eb022f504d5ea2d0,
     type: 3}
   placement_indicator: {fileID: 326696900}
@@ -916,6 +916,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4668312462447322070, guid: 28bdccd767b32a841bfcb21f6e23889c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 357233910}
+    - target: {fileID: 4668312462447322070, guid: 28bdccd767b32a841bfcb21f6e23889c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: lock_change
       objectReference: {fileID: 0}
     - target: {fileID: 3860842210374686388, guid: 28bdccd767b32a841bfcb21f6e23889c,
         type: 3}

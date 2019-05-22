@@ -5,7 +5,8 @@ using UnityEngine;
 public class ScalingUI : MonoBehaviour
 {
     GameObject placedModel;
-
+    [SerializeField]
+    GameObject scaleZoomLock;
     [SerializeField]
     Vector3 storedScale;
     [SerializeField]
@@ -15,6 +16,23 @@ public class ScalingUI : MonoBehaviour
     float duration_Of_Lerp = 1f;
     bool is_scale_buttonUP = false;
     bool is_rotate_buttonUP = false;
+
+    private void Start()
+    {
+        storedScale = MainManager.instance.StoredScale; 
+
+        if(placedModel == null)
+        {
+            if(MainManager.instance.MainModel == null)
+            {
+                placedModel = GameObject.FindGameObjectWithTag("Model").gameObject;
+            }
+            else
+            {
+                placedModel = MainManager.instance.MainModel;
+            }
+        }
+    }
 
     public void SetModel()
     {
@@ -27,7 +45,7 @@ public class ScalingUI : MonoBehaviour
     public void UnlockScale()
     {
         is_scaleStored = false;
-        transform.GetChild(5).gameObject.SetActive(false);
+        scaleZoomLock.SetActive(false);
     }
 
     public void StoreScale()
@@ -36,9 +54,9 @@ public class ScalingUI : MonoBehaviour
         {
             storedScale = placedModel.transform.localScale;
             // Store in the manager script also
-            //MainManager.instance.StoredScale = storedScale;
+            MainManager.instance.StoredScale = storedScale;
             is_scaleStored = true;
-            transform.GetChild(5).gameObject.SetActive(true);
+            scaleZoomLock.SetActive(true);
         }
         else
         {
@@ -74,15 +92,20 @@ public class ScalingUI : MonoBehaviour
     {
         Vector3 rotateSide;
         if (right)
-            rotateSide = new Vector3(0.0f, 10.0f * Time.deltaTime, 0.0f);
+            rotateSide = new Vector3(0.0f, 20.0f * Time.deltaTime, 0.0f);
         else
-            rotateSide = new Vector3(0.0f, -10.0f * Time.deltaTime, 0.0f);
+            rotateSide = new Vector3(0.0f, -20.0f * Time.deltaTime, 0.0f);
         while (!is_rotate_buttonUP)
         {
             placedModel.transform.Rotate(rotateSide, Space.Self);
             yield return new WaitForEndOfFrame();
         }
         is_rotate_buttonUP = false;
+
+        if(GameObject.FindGameObjectWithTag("DrawingManager") != null)
+        {
+            GameObject.FindGameObjectWithTag("DrawingManager").GetComponent<DrawingManager>().Rerender();
+        }
         yield return null;
     }
     #endregion
@@ -103,13 +126,13 @@ public class ScalingUI : MonoBehaviour
         Vector3 targetScale;
         if (up)
         {
-            targetScale = new Vector3(1.0f, 1.0f, 1.0f);
-            duration_Of_Lerp = 10;
+            targetScale = new Vector3(3.0f, 3.0f, 3.0f);
+            duration_Of_Lerp = 1;
             //targetScale = new Vector3(0.001f, 0.001f, 0.001f);
         }
         else
         {
-            targetScale = new Vector3(0.01f, 0.01f, 0.01f);
+            targetScale = new Vector3(0.001f, 0.001f, 0.001f);
             duration_Of_Lerp = 1f;
             //targetScale = new Vector3(-0.001f, -0.001f, -0.001f);
         }
@@ -129,6 +152,10 @@ public class ScalingUI : MonoBehaviour
             //yield return new WaitForEndOfFrame();
         }
         is_scale_buttonUP = false;
+        if (GameObject.FindGameObjectWithTag("DrawingManager") != null)
+        {
+            GameObject.FindGameObjectWithTag("DrawingManager").GetComponent<DrawingManager>().Rerender();
+        }
         yield return null;
     }
     #endregion
